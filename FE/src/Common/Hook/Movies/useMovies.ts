@@ -8,5 +8,5 @@ export const useMovies = (id?: string | number, page: number = 1, limit: number 
             return id ? await movie_GetById(id) : await movie_Get(page, limit, search)
         }
     })
-    return { data, totalDocs: data?.products?.totalDocs, ...rest }
+    return { data, totalDocs: data?.totalDocs, ...rest }
 }

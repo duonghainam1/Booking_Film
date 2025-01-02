@@ -1,5 +1,5 @@
-import movie from "../../models/movie";
-
+import movie from "../../models/movie.js";
+import { StatusCodes } from 'http-status-codes';
 
 export const movie_get = async (req, res) => {
     const { _page = 1, _limit = 12, _search } = req.query;
@@ -15,7 +15,7 @@ export const movie_get = async (req, res) => {
             query.title = { $regex: _search, $options: "i" }
         }
         const movies = await movie.paginate(query, option);
-        res.status(200).json(movies);
+        return res.status(StatusCodes.OK).json(movies);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

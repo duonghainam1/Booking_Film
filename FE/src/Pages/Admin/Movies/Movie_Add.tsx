@@ -1,25 +1,53 @@
 
 
-import { Form, Input, DatePicker, InputNumber, Select, Upload, Button } from "antd";
+import { Form, Input, DatePicker, InputNumber, Select, Upload, Button, message } from "antd";
 import { LeftOutlined, UploadOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useMutation_Movie } from "../../../Common/Hook/Movies/useMutation_Movie";
+import { useGenres } from "../../../Common/Hook/Genrers/useGenres";
+import { uploadFileCloudinary } from "../../../Common/lib/utils";
+import IsLoading from "../../../Components/Loading/IsLoading";
+import moment from "moment";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 const Movie_Add = () => {
+    const [form] = Form.useForm();
+
+    const { mutate, contextHolder, isPending } = useMutation_Movie("ADD")
+    const { data } = useGenres()
+    const options = data?.docs.map((genre: any) => ({
+        label: genre.name,
+        value: genre._id,
+    }));
     const onFinish = (values: any) => {
-        console.log("Form values:", values);
-        // Gửi API thêm phim tại đây
+
+        try {
+            const posterUrl = values.poster?.[0]?.response;
+            const payload = {
+                ...values,
+                poster: posterUrl,
+            };
+            mutate(payload);
+            form.resetFields();
+            message.success("Thêm phim thành công")
+        } catch (error) {
+
+        }
     };
+
+    if (isPending) return <IsLoading />
 
     return (
         <div className="max-w-4xl mx-auto p-6">
+            {contextHolder}
             <div className="relative flex items-center justify-between my-4">
                 <Link to="/admin/movie" className="flex items-center gap-2"><LeftOutlined /><p className="hidden lg:block">Quay lại</p></Link>
                 <h1 className="absolute left-1/2 transform -translate-x-1/2 text-lg lg:text-2xl font-bold">Thêm phim</h1>
             </div>
             <Form
+                form={form}
                 layout="vertical"
                 onFinish={onFinish}
                 initialValues={{
@@ -44,7 +72,17 @@ const Movie_Add = () => {
                     <Form.Item
                         label="Ngày phát hành"
                         name="releaseDate"
-                        rules={[{ required: true, message: "Vui lòng chọn ngày phát hành" }]}
+                        rules={[
+                            { required: true, message: "Vui lòng chọn ngày phát hành" },
+                            {
+                                validator: (_, value) => {
+                                    if (value && value.isBefore(moment(), 'day')) {
+                                        return Promise.reject("Ngày phát hành không được nhỏ hơn ngày hiện tại");
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}
                     >
                         <DatePicker className="w-full" />
                     </Form.Item>
@@ -69,7 +107,11 @@ const Movie_Add = () => {
                         name="genres"
                         rules={[{ required: true, message: "Vui lòng nhập thể loại" }]}
                     >
-                        <Select mode="tags" placeholder="Nhập thể loại phim" />
+                        <Select
+                            mode="tags"
+                            placeholder="Nhập thể loại phim"
+                            options={options}
+                        />
                     </Form.Item>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
@@ -103,10 +145,22 @@ const Movie_Add = () => {
                         getValueFromEvent={(e) => (Array.isArray(e) ? e : e && e.fileList)}
                         rules={[{ required: true, message: "Vui lòng upload poster phim" }]}
                     >
-                        <Upload name="poster" listType="picture" action="/upload.do">
+                        <Upload
+                            name="poster"
+                            listType="picture"
+                            customRequest={async ({ file, onSuccess, onError }) => {
+                                try {
+                                    const url = await uploadFileCloudinary(file as File);
+                                    onSuccess && onSuccess(url);
+                                } catch (error: any) {
+                                    onError && onError(error);
+                                }
+                            }}
+                        >
                             <Button icon={<UploadOutlined />}>Upload Poster</Button>
                         </Upload>
                     </Form.Item>
+
                     <Form.Item label="Link trailer" name="trailer_url">
                         <Input placeholder="Nhập link trailer (tuỳ chọn)" />
                     </Form.Item>

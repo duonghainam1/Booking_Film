@@ -8,6 +8,6 @@ export const genres_post = async (req, res) => {
         await newGenre.save();
         return res.status(StatusCodes.OK).json({ newGenre });
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
     }
 }

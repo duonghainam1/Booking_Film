@@ -9,6 +9,6 @@ export const movie_post = async (req, res) => {
         await newMovie.save();
         return res.status(StatusCodes.OK).json({ newMovie });
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
     }
 }
