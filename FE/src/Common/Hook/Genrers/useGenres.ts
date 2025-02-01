@@ -1,11 +1,11 @@
-import { genres_Get } from './../../../Services/Genres/genres_Service';
+import { genres_Get, genres_GetById } from './../../../Services/Genres/genres_Service';
 import { useQuery } from "@tanstack/react-query"
 
-export const useGenres = (page: number = 1, limit: number = 12, search: string = "") => {
+export const useGenres = (id?: string | number, page: number = 1, limit: number = 12, search: string = "") => {
     const { data, ...rest } = useQuery({
-        queryKey: ["GENRES"],
+        queryKey: ["GENRES", id, page, limit, search],
         queryFn: async () => {
-            return await genres_Get(page, limit, search)
+            return id ? await genres_GetById(id) : await genres_Get(page, limit, search)
         }
     })
     return { data, totalDocs: data?.totalDocs, ...rest }

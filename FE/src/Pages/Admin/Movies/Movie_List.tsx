@@ -48,6 +48,11 @@ const Movie_List = () => {
             title: 'Mô tả',
             dataIndex: 'description',
             key: 'description',
+            render: (_: any, movie: any) => {
+                return (
+                    <p>{movie?.description?.slice(0, 50)}{movie?.description?.length > 50 ? "..." : ''}</p>
+                )
+            }
         },
         {
             title: 'Thể loại',
@@ -81,9 +86,24 @@ const Movie_List = () => {
             }
         },
         {
+            title: 'Quốc gia',
+            dataIndex: 'country',
+            key: 'country',
+            render: (_: any, movie: any) => {
+                return (
+                    <p>{movie?.country}</p>
+                )
+            }
+        },
+        {
             title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
+            render: (_: any, movie: any) => {
+                return (
+                    <p>{movie?.status === "Showing" ? "Đang chiếu" : movie?.status === "Coming_soon" ? "Sắp chiếu" : "Ngừng chiếu"}</p>
+                )
+            }
         },
         {
             title: 'Hành động',

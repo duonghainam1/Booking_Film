@@ -43,8 +43,8 @@ const movieChema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Đang chiếu', 'Sắp chiếu', 'Ngừng chiếu'],
-        default: 'Sắp chiếu'
+        enum: ['Showing', 'Coming_soon', 'Stop_showing'],
+        default: 'Coming_soon'
     },
     country: {
         type: String,

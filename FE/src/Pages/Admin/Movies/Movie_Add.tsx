@@ -33,6 +33,7 @@ const Movie_Add = () => {
             form.resetFields();
             message.success("Thêm phim thành công")
         } catch (error) {
+            message.error("Thêm phim thất bại")
 
         }
     };
@@ -51,7 +52,7 @@ const Movie_Add = () => {
                 layout="vertical"
                 onFinish={onFinish}
                 initialValues={{
-                    status: "Sắp chiếu",
+                    status: "Coming_soon",
                 }}
             >
                 <Form.Item
@@ -172,9 +173,9 @@ const Movie_Add = () => {
                     className="w-1/2"
                 >
                     <Select>
-                        <Option value="Đang chiếu">Đang chiếu</Option>
-                        <Option value="Sắp chiếu">Sắp chiếu</Option>
-                        <Option value="Ngừng chiếu">Ngừng chiếu</Option>
+                        <Option value="Showing">Đang chiếu</Option>
+                        <Option value="Coming_soon">Sắp chiếu</Option>
+                        <Option value="Stop_showing">Ngừng chiếu</Option>
                     </Select>
                 </Form.Item>
 

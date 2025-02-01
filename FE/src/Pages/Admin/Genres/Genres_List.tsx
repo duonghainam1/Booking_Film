@@ -4,6 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import IsLoading from "../../../Components/Loading/IsLoading";
 import { useGenres } from "../../../Common/Hook/Genrers/useGenres";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { useMutation_Genres } from "../../../Common/Hook/Genrers/useMutation_Genres";
 
 const Genres_List = () => {
     const [searchParmas, setSearchParams] = useSearchParams()
@@ -11,7 +12,8 @@ const Genres_List = () => {
     const pageSizeUrl = searchParmas.get('pageSize') ? Number(searchParmas.get('pageSize')) : 10;
     const [currenPage, setCurrentPage] = useState(currentPageUrl);
     const [pageSize, setPageSize] = useState(pageSizeUrl);
-    const { data, isLoading, totalDocs } = useGenres(currenPage, pageSize, '')
+    const { data, isLoading, totalDocs } = useGenres(undefined, currenPage, pageSize, '')
+    const { mutate, contextHolder } = useMutation_Genres("DELETE")
     useEffect(() => {
         const params: any = {}
         if (currenPage !== 1) {
@@ -45,7 +47,7 @@ const Genres_List = () => {
                         <Popconfirm title="Bạn có chắc chắn muốn xóa?"
                             okText="Có"
                             cancelText="Không"
-                            onConfirm={() => console.log(genre._id)} >
+                            onConfirm={() => mutate(genre._id)} >
                             <DeleteOutlined style={{ fontSize: 20 }} />
                         </Popconfirm>
                         <Link to={`/admin/genres/${genre._id}`}>
@@ -66,6 +68,7 @@ const Genres_List = () => {
     if (isLoading) return <IsLoading />
     return (
         <>
+            {contextHolder}
             <div className="flex items-center justify-between my-4">
                 <h1 className=" text-lg lg:text-2xl font-bold">Danh sách thể loại</h1>
                 <Link to="/admin/genres/add" className="flex items-center gap-2">

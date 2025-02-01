@@ -14,10 +14,12 @@ const { Option } = Select;
 const Movie_Edit = () => {
     const { id } = useParams();
     const { data: movie } = useMovies(id);
+    console.log(movie);
+
     const { mutate, contextHolder } = useMutation_Movie("EDIT");
     const { data } = useGenres();
 
-    const options = data?.genres_All?.docs.map((genre: any) => ({
+    const options = data?.docs?.map((genre: any) => ({
         label: genre.name,
         value: genre._id,
     }));
@@ -56,7 +58,7 @@ const Movie_Edit = () => {
                     releaseDate: movie.releaseDate ? moment(movie.releaseDate) : null,
                     duration: movie.duration,
                     actors: movie.actors,
-                    genres: movie.genres,
+                    genres: movie.genres.name,
                     director: movie.director,
                     language: movie.language,
                     country: movie.country,
@@ -109,7 +111,6 @@ const Movie_Edit = () => {
                         rules={[{ required: true, message: "Vui lòng nhập thể loại" }]}
                     >
                         <Select
-                            mode="tags"
                             placeholder="Nhập thể loại phim"
                             options={options} // Gắn danh sách options vào Select
                         />
@@ -173,9 +174,9 @@ const Movie_Edit = () => {
                     className="w-1/2"
                 >
                     <Select>
-                        <Option value="Đang chiếu">Đang chiếu</Option>
-                        <Option value="Sắp chiếu">Sắp chiếu</Option>
-                        <Option value="Ngừng chiếu">Ngừng chiếu</Option>
+                        <Option value="Showing">Đang chiếu</Option>
+                        <Option value="Coming_soon">Sắp chiếu</Option>
+                        <Option value="Stop_showing">Ngừng chiếu</Option>
                     </Select>
                 </Form.Item>
 

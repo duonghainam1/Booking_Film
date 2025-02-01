@@ -1,7 +1,16 @@
+import { Outlet } from "react-router-dom"
+import Header_Client from "../../Components/Layouts/Client/Header_Client"
+import Footer_Client from "../../Components/Layouts/Client/Footer_Client"
 
 const Lay_Out_Client = () => {
     return (
-        <div>Lay_Out_Admin</div>
+        <div className="bg-[#10141B] *:text-white">
+            <Header_Client />
+            <main className="mt-[80 px]">
+                <Outlet />
+            </main>
+            <Footer_Client />
+        </div>
     )
 }
 

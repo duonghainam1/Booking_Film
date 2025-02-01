@@ -18,3 +18,13 @@ export const genres_get = async (req, res) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
     }
 }
+
+export const genres_get_by_id = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const genre = await genres.findById(id);
+        return res.status(StatusCodes.OK).json(genre);
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
+    }
+}
