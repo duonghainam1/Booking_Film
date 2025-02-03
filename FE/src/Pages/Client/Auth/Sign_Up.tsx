@@ -1,21 +1,27 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Button, Form, FormProps, Input } from "antd"
-import { Link } from "react-router-dom";
+import { Button, Form, FormProps, Input, message } from "antd"
+import { Link, useNavigate } from "react-router-dom";
 import poster from "../../../assets/img/bg_2.jpg"
+import { mutationAuth } from "../../../Common/Hook/Auth/mutationAuth";
 
 type FieldType = {
     username?: string;
     password?: string;
-    confimPasswor?: string
-    phone?: string;
+    confirmPassword?: string
+    phone_number?: string;
     email: string
 };
 const Sign_Up = () => {
+    const { mutate, contextHolder } = mutationAuth("SIGN_UP")
+    const navigate = useNavigate()
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-        console.log('Success:', values);
+        mutate(values)
+        message.success("Đăng ký thành công");
+        navigate("/signin")
     };
     return (
         <div >
+            {contextHolder}
             <div className="flex justify-center items-center h-screen bg-cover bg-center"
                 style={{ backgroundImage: `url(${poster})` }}>
                 <Form
@@ -51,7 +57,7 @@ const Sign_Up = () => {
                         </Form.Item>
                         <Form.Item<FieldType>
                             label={<span className="text-white">Số điện thoại</span>}
-                            name="phone"
+                            name="phone_number"
                             rules={[{ required: true, message: 'Please input your password!' }]}
                         >
                             <Input placeholder="Số điện thoại" />
@@ -67,7 +73,7 @@ const Sign_Up = () => {
                         </Form.Item>
                         <Form.Item<FieldType>
                             label={<span className="text-white">Nhập lại mật khẩu</span>}
-                            name="confimPasswor"
+                            name="confirmPassword"
                             rules={[{ required: true, message: 'Please input your password!' }]}
                         >
                             <Input placeholder="Nhập lại mật khẩu" />

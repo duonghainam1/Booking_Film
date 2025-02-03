@@ -11,7 +11,7 @@ const { Content } = Layout;
 const Lay_Out_Admin = () => {
     const location = useLocation();
     const breadcrumbNameMap: any = {
-        "/admin": "Trang chủ",
+        "/admin": "Thông kê",
         '/admin/movie': 'Danh sách phim',
         '/admin/movie/add': 'Thêm phim',
         '/admin/movie/:id': 'Chỉnh sửa phim',

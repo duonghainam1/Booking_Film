@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 const showTimeSchema = new mongoose.Schema({
     movieId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -29,4 +30,5 @@ const showTimeSchema = new mongoose.Schema({
     language: { type: String },
 
 }, { timestamps: true, versionKey: false });
+showTimeSchema.plugin(mongoosePaginate);
 export default mongoose.model("ShowTime", showTimeSchema);

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import mongoosePaginate from "mongoose-paginate-v2";
 const cinemaSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -27,4 +27,5 @@ const cinemaSchema = new mongoose.Schema({
     },
 
 }, { timestamps: true, versionKey: false });
+cinemaSchema.plugin(mongoosePaginate);
 export default mongoose.model("Cinema", cinemaSchema);
