@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
+import cinemaHall from "./cinemaHall";
 const cinemaSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -9,10 +10,11 @@ const cinemaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    total_seats: {
-        type: Number,
-        required: true,
-    },
+
+    // total_seats: {
+    //     type: Number,
+    //     required: true,
+    // },
     phone_number: {
         type: String,
         required: true,

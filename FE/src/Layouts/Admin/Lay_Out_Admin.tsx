@@ -18,6 +18,15 @@ const Lay_Out_Admin = () => {
         '/admin/genres': 'Danh sách thể loại',
         '/admin/genres/add': 'Thêm thể loại',
         '/admin/genres/:id': `Chỉnh sửa thể loại`,
+        '/admin/cinema': 'Danh sách rạp chiếu',
+        '/admin/cinema/add': 'Thêm rạp chiếu',
+        '/admin/cinema/:id': 'Chỉnh sửa rạp chiếu',
+        '/admin/show_time': 'Danh sách lịch chiếu',
+        '/admin/show_time/add': 'Thêm lịch chiếu',
+        '/admin/show_time/:id': 'Chỉnh sửa lịch chiếu',
+        '/admin/cinema-room': 'Danh sách phòng chiếu',
+        '/admin/cinema-room/add': 'Thêm phòng chiếu',
+        '/admin/cinema-room/:id': 'Chỉnh sửa phòng chiếu',
     };
     const pathSnippets = location.pathname.split('/').filter(i => i);
     const breadcrumbItems = pathSnippets.map((_, index) => {

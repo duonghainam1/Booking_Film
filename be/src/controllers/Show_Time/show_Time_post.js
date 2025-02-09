@@ -1,17 +1,17 @@
 import { StatusCodes } from "http-status-codes";
 import Movie from "../../models/movie.js";
-import Cenima from "../../models/cenima.js";
 import ShowTime from "../../models/showTime.js";
+import cinemaHall from "../../models/cinemaHall.js";
 export const Show_Time_post = async (req, res) => {
     try {
-        const { movieId, cinemaId, show_time, price, screen_type, available_seats, language } = req.body;
+        const { movieId, cinemaHallId } = req.body;
         const movie = await Movie.findById(movieId);
         if (!movie) {
-            return res.status(StatusCodes.NOT_FOUND).json({ message: "Movie not found" });
+            return res.status(StatusCodes.NOT_FOUND).json({ message: "Không tìm thấy phim" });
         }
-        const cinema = await Cenima.findById(cinemaId);
+        const cinema = await cinemaHall.findById(cinemaHallId);
         if (!cinema) {
-            return res.status(StatusCodes.NOT_FOUND).json({ message: "Cinema not found" });
+            return res.status(StatusCodes.NOT_FOUND).json({ message: "Không tìm thấy phòng chiếu" });
         }
         const newShowTime = await ShowTime.create({
             ...req.body,

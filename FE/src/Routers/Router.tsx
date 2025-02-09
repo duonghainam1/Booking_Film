@@ -13,6 +13,16 @@ import Ticket_Page from "../Pages/Client/Ticket/Ticket_Page"
 import Sign_In from "../Pages/Client/Auth/Sign_In"
 import Sign_Up from "../Pages/Client/Auth/Sign_Up"
 import Movie_Details from "../Pages/Client/Movie_Details/Movie_Details"
+import Cinema_List from "../Pages/Admin/Cenima/Cinema_List"
+import Cinema_Add from "../Pages/Admin/Cenima/Cinema_Add"
+import Cinema_Edit from "../Pages/Admin/Cenima/Cinema_Edit"
+import Show_Time_List from "../Pages/Admin/Show_Time/Show_Time_List"
+import Show_Time_Add from "../Pages/Admin/Show_Time/Show_Time_Add"
+import Show_Time_Edit from "../Pages/Admin/Show_Time/Show_Time_Edit"
+import CinemaHall_Add from "../Pages/Admin/CInemaHall/CinemaHall_Add"
+import CinemaHall_List from "../Pages/Admin/CInemaHall/CinemaHall_List"
+import CinemaHall_Edit from "../Pages/Admin/CInemaHall/CinemaHall_Edit"
+
 
 const Router = () => {
     return (
@@ -36,7 +46,18 @@ const Router = () => {
                     <Route path="genres" element={<Genres_List />} />
                     <Route path="genres/add" element={<Genres_Add />} />
                     <Route path="genres/:id" element={<Genres_Edit />} />
-
+                    {/* Rạp */}
+                    <Route path="cinema" element={<Cinema_List />} />
+                    <Route path="cinema/add" element={<Cinema_Add />} />
+                    <Route path="cinema/:id" element={<Cinema_Edit />} />
+                    {/* Lích chiếu */}
+                    <Route path="show_time" element={<Show_Time_List />} />
+                    <Route path="show_time/add" element={<Show_Time_Add />} />
+                    <Route path="show_time/:id" element={<Show_Time_Edit />} />
+                    {/* Phòng chiếu */}
+                    <Route path="cinema-room" element={<CinemaHall_List />} />
+                    <Route path="cinema-room/add" element={<CinemaHall_Add />} />
+                    <Route path="cinema-room/:id" element={<CinemaHall_Edit />} />
                 </Route>
             </Routes>
         </>)
