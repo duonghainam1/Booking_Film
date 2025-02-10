@@ -6,14 +6,10 @@ import cinemaHall from '../../models/cinemaHall.js';
 export const Show_Time_put = async (req, res) => {
     try {
         const { id } = req.params;
-        const { movieId, cinemaHallId, dates } = req.body;
+        const { movieId, dates } = req.body;
         const movie = await Movie.findById(movieId);
         if (!movie) {
             return res.status(StatusCodes.NOT_FOUND).json({ message: "Movie not found" });
-        }
-        const cinema = await cinemaHall.findById(cinemaHallId);
-        if (!cinema) {
-            return res.status(StatusCodes.NOT_FOUND).json({ message: "Cinema not found" });
         }
         if (!Array.isArray(dates) || dates.length === 0) {
             return res.status(StatusCodes.BAD_REQUEST).json({ message: "At least one date is required" });
@@ -23,14 +19,13 @@ export const Show_Time_put = async (req, res) => {
                 return res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid showtimes data" });
             }
             for (const showtime of date.showtimes) {
-                if (!showtime.start_time || !showtime.end_time || !showtime.price) {
+                if (!showtime.start_time || !showtime.end_time) {
                     return res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid showtime data" });
                 }
             }
         }
         const showTime = await ShowTime.findByIdAndUpdate(id, {
             movieId,
-            cinemaHallId,
             dates,
         }, { new: true });
         if (!showTime) {

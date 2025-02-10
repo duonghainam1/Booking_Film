@@ -7,7 +7,7 @@ import { useMutation_Movie } from "../../../Common/Hook/Movies/useMutation_Movie
 import { useGenres } from "../../../Common/Hook/Genrers/useGenres";
 import { uploadFileCloudinary } from "../../../Common/lib/utils";
 import IsLoading from "../../../Components/Loading/IsLoading";
-import moment from "moment";
+// import moment from "moment";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -75,14 +75,14 @@ const Movie_Add = () => {
                         name="releaseDate"
                         rules={[
                             { required: true, message: "Vui lòng chọn ngày phát hành" },
-                            {
-                                validator: (_, value) => {
-                                    if (value && value.isBefore(moment(), 'day')) {
-                                        return Promise.reject("Ngày phát hành không được nhỏ hơn ngày hiện tại");
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
+                            // {
+                            //     validator: (_, value) => {
+                            //         if (value && value.isBefore(moment(), 'day')) {
+                            //             return Promise.reject("Ngày phát hành không được nhỏ hơn ngày hiện tại");
+                            //         }
+                            //         return Promise.resolve();
+                            //     }
+                            // }
                         ]}
                     >
                         <DatePicker className="w-full" />

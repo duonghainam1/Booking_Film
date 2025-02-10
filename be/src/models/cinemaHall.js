@@ -31,7 +31,7 @@ const cinemaHallSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ["active", "maintenance", "closed"],
+        enum: ["active", "maintenance", "closed", "selected"],
         default: "active"
     },
 }, { timestamps: true, versionKey: false });

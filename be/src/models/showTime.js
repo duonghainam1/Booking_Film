@@ -8,11 +8,11 @@ const showTimeSchema = new mongoose.Schema({
         ref: "Movie",
         required: true,
     },
-    cinemaHallId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "CinemaHall",
-        required: true,
-    },
+    // cinemaHallId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "CinemaHall",
+    //     required: true,
+    // },
     dates: [{
         date: {
             type: Date,
@@ -27,15 +27,20 @@ const showTimeSchema = new mongoose.Schema({
                 type: Date,
                 required: true,
             },
-            price: {
-                type: Number,
-                required: true,
-            },
+            // price: {
+            //     type: Number,
+            //     required: true,
+            // },
             status: {
                 type: String,
                 enum: ["scheduled", "ongoing", "completed", "canceled"],
                 default: "scheduled",
-            }
+            },
+            cinemaHallId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "CinemaHall",
+                required: true,
+            },
         }]
     }]
 }, { timestamps: true, versionKey: false });

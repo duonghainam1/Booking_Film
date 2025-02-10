@@ -1,4 +1,4 @@
-import { Form, Input, DatePicker, InputNumber, Select, Upload, Button } from "antd";
+import { Form, Input, DatePicker, InputNumber, Select, Upload, Button, message } from "antd";
 import { LeftOutlined, UploadOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
 import { useMutation_Movie } from "../../../Common/Hook/Movies/useMutation_Movie";
@@ -14,6 +14,7 @@ const { Option } = Select;
 const Movie_Edit = () => {
     const { id } = useParams();
     const { data: movie } = useMovies(id);
+
     console.log(movie);
 
     const { mutate, contextHolder } = useMutation_Movie("EDIT");
@@ -32,6 +33,7 @@ const Movie_Edit = () => {
             _id: id,
         };
         mutate(payload);
+        message.success("Cập nhật phim thành công!");
     };
 
     if (!movie) return <IsLoading />
@@ -53,18 +55,18 @@ const Movie_Edit = () => {
                 layout="vertical"
                 onFinish={onFinish}
                 initialValues={{
-                    title: movie.title,
-                    description: movie.description,
-                    releaseDate: movie.releaseDate ? moment(movie.releaseDate) : null,
-                    duration: movie.duration,
-                    actors: movie.actors,
-                    genres: movie.genres.name,
-                    director: movie.director,
-                    language: movie.language,
-                    country: movie.country,
-                    poster: movie.poster ? [{ url: movie.poster }] : [],
-                    trailer_url: movie.trailer_url,
-                    status: movie.status,
+                    title: movie.movie?.title,
+                    description: movie.movie?.description,
+                    releaseDate: movie.movie.releaseDate ? moment(movie.releaseDate) : null,
+                    duration: movie.movie.duration,
+                    actors: movie.movie.actors,
+                    genres: movie.movie.genres?.name,
+                    director: movie.movie.director,
+                    language: movie.movie.language,
+                    country: movie.movie.country,
+                    poster: movie.movie.poster ? [{ url: movie.movie.poster }] : [],
+                    trailer_url: movie.movie.trailer_url,
+                    status: movie.movie.status,
                 }}
             >
                 <Form.Item

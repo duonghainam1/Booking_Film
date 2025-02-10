@@ -1,4 +1,4 @@
-import { Form, DatePicker, Select, Button, InputNumber, message, Space } from "antd";
+import { Form, DatePicker, Select, Button, message, Space } from "antd";
 import { DeleteOutlined, LeftOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import IsLoading from "../../../Components/Loading/IsLoading";
@@ -13,14 +13,19 @@ const Show_Time_Add = () => {
     const { data: movies } = useMovies();
     const { data: cinemaHalls } = useCinemaHall();
 
-    const movieOptions = movies?.docs.map((movie: any) => ({
-        label: movie.title,
-        value: movie._id,
-    }));
-    const cinemaHallOptions = cinemaHalls?.docs.map((cinemaHall: any) => ({
-        label: `${cinemaHall.name} - ${cinemaHall.cinemaId.name}`,
-        value: cinemaHall._id,
-    }));
+    const movieOptions = movies?.docs
+        .filter((movie: any) => movie.status === "Showing")
+        .map((movie: any) => ({
+            label: movie.title,
+            value: movie._id,
+        }));
+    const cinemaHallOptions = cinemaHalls?.docs
+        .filter((cinemaHall: any) => cinemaHall.status === "active")
+        .map((cinemaHall: any) => ({
+            label: `${cinemaHall.name} - ${cinemaHall.cinemaId.name}`,
+            value: cinemaHall._id,
+        }));
+
 
     const onFinish = (values: any) => {
         try {
@@ -31,7 +36,8 @@ const Show_Time_Add = () => {
                     showtimes: date.showtimes.map((showtime: any) => ({
                         start_time: showtime.start_time.toISOString(),
                         end_time: showtime.end_time.toISOString(),
-                        price: showtime.price,
+                        // price: showtime.price,
+                        cinemaHallId: showtime.cinemaHallId,
                     })),
                 })),
             };
@@ -62,13 +68,13 @@ const Show_Time_Add = () => {
                     <Select placeholder="Chọn phim" options={movieOptions} />
                 </Form.Item>
 
-                <Form.Item
+                {/* <Form.Item
                     label="Phòng chiếu phim"
                     name="cinemaHallId"
                     rules={[{ required: true, message: "Vui lòng chọn phòng chiếu" }]}
                 >
                     <Select placeholder="Chọn phòng chiếu" options={cinemaHallOptions} />
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.List
                     name="dates"
@@ -110,10 +116,7 @@ const Show_Time_Add = () => {
                                                             label="Thời gian bắt đầu"
                                                             rules={[{ required: true, message: "Vui lòng chọn thời gian bắt đầu" }]}
                                                         >
-                                                            <DatePicker showTime className="w-full"
-                                                                format={"HH:mm:ss"}
-                                                                picker="time"
-                                                            />
+                                                            <DatePicker showTime className="w-full" format={"HH:mm:ss"} picker="time" />
                                                         </Form.Item>
 
                                                         <Form.Item
@@ -122,23 +125,30 @@ const Show_Time_Add = () => {
                                                             label="Thời gian kết thúc"
                                                             rules={[{ required: true, message: "Vui lòng chọn thời gian kết thúc" }]}
                                                         >
-                                                            <DatePicker showTime className="w-full"
-                                                                format={"HH:mm:ss"}
-                                                                picker="time" />
+                                                            <DatePicker showTime className="w-full" format={"HH:mm:ss"} picker="time" />
                                                         </Form.Item>
 
-                                                        <Form.Item
+                                                        {/* <Form.Item
                                                             {...restShowtimeField}
                                                             name={[showtimeName, 'price']}
                                                             label="Giá vé"
                                                             rules={[{ required: true, message: "Vui lòng nhập giá vé" }]}
                                                         >
                                                             <InputNumber min={10000} className="w-full" placeholder="Nhập giá vé" />
+                                                        </Form.Item> */}
+
+                                                        <Form.Item
+                                                            {...restShowtimeField}
+                                                            name={[showtimeName, 'cinemaHallId']}
+                                                            label="Phòng chiếu"
+                                                            rules={[{ required: true, message: "Vui lòng chọn phòng chiếu" }]}
+                                                        >
+                                                            <Select placeholder="Chọn phòng chiếu" options={cinemaHallOptions} />
                                                         </Form.Item>
 
-                                                        <Button className="border-none"
-                                                            onClick={() => removeShowtime(showtimeName)} disabled={showtimeFields.length <= 1}>
-                                                            <DeleteOutlined />                                                        </Button>
+                                                        <Button className="border-none" onClick={() => removeShowtime(showtimeName)} disabled={showtimeFields.length <= 1}>
+                                                            <DeleteOutlined />
+                                                        </Button>
                                                     </Space>
                                                 ))}
                                                 <Form.Item>

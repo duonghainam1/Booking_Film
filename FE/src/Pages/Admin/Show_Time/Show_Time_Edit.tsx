@@ -1,4 +1,4 @@
-import { Form, DatePicker, Select, Button, InputNumber, message, Space } from "antd";
+import { Form, DatePicker, Select, Button, message, Space } from "antd";
 import { DeleteOutlined, LeftOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
 import IsLoading from "../../../Components/Loading/IsLoading";
@@ -12,19 +12,22 @@ const Show_Time_Edit = () => {
     const { id } = useParams();
     const { mutate, contextHolder, isPending } = useMutation_Show_Time("EDIT");
     const { data } = useShow_time(id);
-    console.log(data);
 
     const { data: movies } = useMovies();
     const { data: cinemaHalls } = useCinemaHall();
 
-    const movieOptions = movies?.docs.map((movie: any) => ({
-        label: movie.title,
-        value: movie._id,
-    }));
-    const cinemaHallOptions = cinemaHalls?.docs.map((cinemaHall: any) => ({
-        label: `${cinemaHall.name} - ${cinemaHall.cinemaId.name}`,
-        value: cinemaHall._id,
-    }));
+    const movieOptions = movies?.docs
+        .filter((movie: any) => movie.status === "Showing")
+        .map((movie: any) => ({
+            label: movie.title,
+            value: movie._id,
+        }));
+    const cinemaHallOptions = cinemaHalls?.docs
+        .filter((cinemaHall: any) => cinemaHall.status === "active")
+        .map((cinemaHall: any) => ({
+            label: `${cinemaHall.name} - ${cinemaHall.cinemaId.name}`,
+            value: cinemaHall._id,
+        }));
 
     const onFinish = (values: any) => {
         try {
@@ -36,7 +39,7 @@ const Show_Time_Edit = () => {
                     showtimes: date.showtimes.map((showtime: any) => ({
                         start_time: showtime.start_time.toISOString(),
                         end_time: showtime.end_time.toISOString(),
-                        price: showtime.price,
+                        cinemaHallId: showtime.cinemaHallId,
                     })),
                 })),
             };
@@ -64,46 +67,35 @@ const Show_Time_Edit = () => {
             <Form layout="vertical" onFinish={onFinish}
                 initialValues={{
                     movieId: data?.movieId._id,
-                    cinemaHallId: data?.cinemaHallId._id,
+                    cinemaHallId: data?.cinemaHallId?._id,
                     dates: data?.dates.map((date: any) => ({
                         date: dayjs(date.date),
                         showtimes: date.showtimes.map((showtime: any) => ({
                             start_time: dayjs(showtime.start_time),
                             end_time: dayjs(showtime.end_time),
-                            price: showtime.price,
+                            cinemaHallId: showtime.cinemaHallId?._id,
                         })),
                     })),
-
                 }}
             >
                 <Form.Item label="Phim" name="movieId" rules={[{ required: true, message: "Vui lòng chọn phim" }]}>
                     <Select placeholder="Chọn phim" options={movieOptions} />
                 </Form.Item>
 
-                <Form.Item
-                    label="Phòng chiếu phim"
-                    name="cinemaHallId"
-                    rules={[{ required: true, message: "Vui lòng chọn phòng chiếu" }]}
-                >
-                    <Select placeholder="Chọn phòng chiếu" options={cinemaHallOptions} />
-                </Form.Item>
-
                 <Form.List
                     name="dates"
                     initialValue={[{ date: dayjs(), showtimes: [{ start_time: dayjs(), end_time: dayjs().add(1, 'hour'), price: 100000 }] }]}
-                    rules={[
-                        {
-                            validator: async (_, names) => {
-                                if (!names || names.length < 1) {
-                                    return Promise.reject(new Error('Phải có ít nhất một ngày.'));
-                                }
-                            },
-                        },
-                    ]}
+                    rules={[{
+                        validator: async (_, names) => {
+                            if (!names || names.length < 1) {
+                                return Promise.reject(new Error('Phải có ít nhất một ngày.'));
+                            }
+                        }
+                    }]}
                 >
                     {(fields, { add, remove }) => (
                         <>
-                            {fields.map(({ key, fieldKey, name, fieldArrayKey, ...restField }: any) => (
+                            {fields.map(({ key, name, fieldKey, ...restField }) => (
                                 <div key={key} className="mb-4">
                                     <Form.Item
                                         {...restField}
@@ -116,7 +108,7 @@ const Show_Time_Edit = () => {
 
                                     <Form.List
                                         name={[name, 'showtimes']}
-                                        initialValue={[{ start_time: dayjs(), end_time: dayjs().add(1, 'hour'), price: 100000 }]}
+                                        initialValue={[{ start_time: dayjs(), end_time: dayjs().add(1, 'hour') }]}
                                     >
                                         {(showtimeFields, { add: addShowtime, remove: removeShowtime }) => (
                                             <>
@@ -128,10 +120,7 @@ const Show_Time_Edit = () => {
                                                             label="Thời gian bắt đầu"
                                                             rules={[{ required: true, message: "Vui lòng chọn thời gian bắt đầu" }]}
                                                         >
-                                                            <DatePicker showTime className="w-full"
-                                                                format={"HH:mm:ss"}
-                                                                picker="time"
-                                                            />
+                                                            <DatePicker showTime className="w-full" format={"HH:mm:ss"} picker="time" />
                                                         </Form.Item>
 
                                                         <Form.Item
@@ -140,23 +129,21 @@ const Show_Time_Edit = () => {
                                                             label="Thời gian kết thúc"
                                                             rules={[{ required: true, message: "Vui lòng chọn thời gian kết thúc" }]}
                                                         >
-                                                            <DatePicker showTime className="w-full"
-                                                                format={"HH:mm:ss"}
-                                                                picker="time" />
+                                                            <DatePicker showTime className="w-full" format={"HH:mm:ss"} picker="time" />
                                                         </Form.Item>
 
                                                         <Form.Item
                                                             {...restShowtimeField}
-                                                            name={[showtimeName, 'price']}
-                                                            label="Giá vé"
-                                                            rules={[{ required: true, message: "Vui lòng nhập giá vé" }]}
+                                                            name={[showtimeName, 'cinemaHallId']}
+                                                            label="Phòng chiếu"
+                                                            rules={[{ required: true, message: "Vui lòng chọn phòng chiếu" }]}
                                                         >
-                                                            <InputNumber min={10000} className="w-full" placeholder="Nhập giá vé" />
+                                                            <Select placeholder="Chọn phòng chiếu" options={cinemaHallOptions} />
                                                         </Form.Item>
 
-                                                        <Button className="border-none"
-                                                            onClick={() => removeShowtime(showtimeName)} disabled={showtimeFields.length <= 1}>
-                                                            <DeleteOutlined />                                                        </Button>
+                                                        <Button className="border-none" onClick={() => removeShowtime(showtimeName)} disabled={showtimeFields.length <= 1}>
+                                                            <DeleteOutlined />
+                                                        </Button>
                                                     </Space>
                                                 ))}
                                                 <Form.Item>

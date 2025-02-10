@@ -12,7 +12,7 @@ export const show_time_get = async (req, res) => {
             populate: [
                 { path: "movieId" },
                 {
-                    path: "cinemaHallId",
+                    path: "dates.showtimes.cinemaHallId",
                     populate: { path: "cinemaId" }
                 }
             ],
@@ -36,7 +36,7 @@ export const show_time_get_by_id = async (req, res) => {
         const showTime = await ShowTime.findById(id)
             .populate("movieId")
             .populate({
-                path: "cinemaHallId",
+                path: "dates.showtimes.cinemaHallId",
                 populate: { path: "cinemaId" }
             });
 

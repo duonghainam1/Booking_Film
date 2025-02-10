@@ -10,6 +10,7 @@ import Router_Cinema from "./routers/Cinema/cinema_Router.js";
 import Router_show_time from "./routers/Show_Time/show_Time_Router.js";
 import Router_Cinema_Hall from "./routers/Cinema/cinnema_Hall_Router.js";
 const app = express();
+import "../src/middleware/cinemaHall.js";
 dotenv.config();
 // middleware
 app.use(express.json());

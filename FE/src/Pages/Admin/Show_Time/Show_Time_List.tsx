@@ -38,22 +38,20 @@ const Show_Time_List = () => {
             render: (_: any, show_time: any) => {
 
                 return (
-                    <p>{show_time.movieId.title}</p>
+                    <p>{show_time?.movieId?.title}</p>
                 )
             }
         },
-        {
-            title: 'Tên Phòng chiếu + Rạp',
-            dataIndex: 'cinemaHallId',
-            key: 'cinemaHallId',
-            render: (_: any, show_time: any) => {
-                console.log(show_time.cinemaHallId?.name);
-
-                return (
-                    <p>{show_time.cinemaHallId?.name} - {show_time?.cinemaHallId?.cinemaId?.name}</p>
-                )
-            }
-        },
+        // {
+        //     title: 'Tên Phòng chiếu + Rạp',
+        //     dataIndex: 'cinemaHallId',
+        //     key: 'cinemaHallId',
+        //     render: (_: any, show_time: any) => {
+        //         return (
+        //             <p>{show_time.cinemaHallId?.name} - {show_time?.cinemaHallId?.cinemaId?.name}</p>
+        //         )
+        //     }
+        // },
         {
             title: 'Ngày chiếu',
             dataIndex: 'start_time',
@@ -85,6 +83,7 @@ const Show_Time_List = () => {
                                                                     ? "Đã hủy"
                                                                     : ""}
                                                 </Tag>
+                                                <Tag>{show?.cinemaHallId?.name} - {show?.cinemaHallId?.cinemaId?.name}</Tag>
                                             </div>
                                         );
                                     })}

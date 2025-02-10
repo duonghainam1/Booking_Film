@@ -19,9 +19,9 @@ import Cinema_Edit from "../Pages/Admin/Cenima/Cinema_Edit"
 import Show_Time_List from "../Pages/Admin/Show_Time/Show_Time_List"
 import Show_Time_Add from "../Pages/Admin/Show_Time/Show_Time_Add"
 import Show_Time_Edit from "../Pages/Admin/Show_Time/Show_Time_Edit"
-import CinemaHall_Add from "../Pages/Admin/CInemaHall/CinemaHall_Add"
-import CinemaHall_List from "../Pages/Admin/CInemaHall/CinemaHall_List"
-import CinemaHall_Edit from "../Pages/Admin/CInemaHall/CinemaHall_Edit"
+import CinemaHall_Add from "../Pages/Admin/CinemaHall/CinemaHall_Add"
+import CinemaHall_List from "../Pages/Admin/CinemaHall/CinemaHall_List"
+import CinemaHall_Edit from "../Pages/Admin/CinemaHall/CinemaHall_Edit"
 
 
 const Router = () => {
