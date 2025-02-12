@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { movie_post } from '../../controllers/Movies/movie_post.js';
-import { movie_get, movie_get_by_id } from '../../controllers/Movies/movie_get.js';
-import { movie_put } from '../../controllers/Movies/movie_put.js';
-import { movie_delete } from '../../controllers/Movies/movie_delete.js';
+import { movie_post } from '../controllers/Movies/movie_post.js';
+import { movie_get, movie_get_by_id } from '../controllers/Movies/movie_get.js';
+import { movie_put } from '../controllers/Movies/movie_put.js';
+import { movie_delete } from '../controllers/Movies/movie_delete.js';
 
 const Router_movie = Router();
 Router_movie.get('/movies', movie_get)

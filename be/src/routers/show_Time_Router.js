@@ -1,9 +1,9 @@
 
 import { Router } from "express";
-import { Show_Time_post } from "../../controllers/Show_Time/Show_Time_post.js";
-import { show_time_get, show_time_get_by_id } from "../../controllers/Show_Time/show_time_get.js";
-import { Show_Time_put } from "../../controllers/Show_Time/show_time_put.js";
-import { show_time_delete } from "../../controllers/Show_Time/show_time_delete.js";
+import { Show_Time_post } from "../controllers/Show_Time/Show_Time_post.js";
+import { show_time_get, show_time_get_by_id } from "../controllers/Show_Time/show_time_get.js";
+import { Show_Time_put } from "../controllers/Show_Time/show_time_put.js";
+import { show_time_delete } from "../controllers/Show_Time/show_time_delete.js";
 const Router_show_time = Router();
 Router_show_time.get("/show_time", show_time_get)
 Router_show_time.get("/show_time/:id", show_time_get_by_id)
