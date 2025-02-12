@@ -30,8 +30,8 @@ app.use("/api/v1", Router_Cinema_Hall)
 app.use("/api/v1", Router_show_time)
 
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-})
-// export const viteNodeApp = app;
+// app.listen(process.env.PORT, () => {
+//     console.log(`Server is running on port ${process.env.PORT}`);
+// })
+export const viteNodeApp = app;
 
