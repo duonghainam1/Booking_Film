@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Form, Input, Select, Button, message } from "antd";
 import { useMutation_CinemaHall } from "../../../Common/Hook/Cenima/useMutation_CinemaHall";
 import { useCinema } from "../../../Common/Hook/Cenima/useCinema";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, LeftOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -84,7 +85,15 @@ const CinemaHall_Add = () => {
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
             {contextHolder}
-            <h2 className="text-2xl font-semibold mb-4">Thêm Phòng Chiếu Phim</h2>
+            <div className="relative flex items-center justify-between my-4">
+                <Link to="/admin/cinema-room" className="flex items-center gap-2">
+                    <LeftOutlined />
+                    <p className="hidden lg:block">Quay lại</p>
+                </Link>
+                <h1 className="absolute left-1/2 transform -translate-x-1/2 text-lg lg:text-2xl font-bold">
+                    Thêm phòng chiếu
+                </h1>
+            </div>
             <Form layout="vertical" onFinish={onFinish} form={form}>
                 <Form.Item name="cinemaId" label="Tên Rạp" rules={[{ required: true, message: "Nhập tên rạp!" }]}>
                     <Select placeholder="Chọn phòng" options={options} />

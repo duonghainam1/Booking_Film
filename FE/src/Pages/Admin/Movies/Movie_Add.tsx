@@ -25,9 +25,12 @@ const Movie_Add = () => {
 
         try {
             const posterUrl = values.poster?.[0]?.response;
+            const banner = values.banner?.[0]?.response;
+
             const payload = {
                 ...values,
                 poster: posterUrl,
+                banner: banner,
             };
             mutate(payload);
             form.resetFields();
@@ -138,7 +141,7 @@ const Movie_Add = () => {
                         <Input placeholder="Nhập quốc gia" />
                     </Form.Item>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                     <Form.Item
                         label="Poster"
                         name="poster"
@@ -161,7 +164,28 @@ const Movie_Add = () => {
                             <Button icon={<UploadOutlined />}>Upload Poster</Button>
                         </Upload>
                     </Form.Item>
-
+                    <Form.Item
+                        label="Banner"
+                        name="banner"
+                        valuePropName="fileList"
+                        getValueFromEvent={(e) => (Array.isArray(e) ? e : e && e.fileList)}
+                        rules={[{ required: true, message: "Vui lòng upload banner phim" }]}
+                    >
+                        <Upload
+                            name="banner"
+                            listType="picture"
+                            customRequest={async ({ file, onSuccess, onError }) => {
+                                try {
+                                    const url = await uploadFileCloudinary(file as File);
+                                    onSuccess && onSuccess(url);
+                                } catch (error: any) {
+                                    onError && onError(error);
+                                }
+                            }}
+                        >
+                            <Button icon={<UploadOutlined />}>Upload Banner</Button>
+                        </Upload>
+                    </Form.Item>
                     <Form.Item label="Link trailer" name="trailer_url">
                         <Input placeholder="Nhập link trailer (tuỳ chọn)" />
                     </Form.Item>

@@ -20,6 +20,7 @@ const authSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
+        default: "https://www.pinterest.com/pin/801288958729483959",
     },
     phone_number: {
         type: String,

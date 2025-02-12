@@ -1,8 +1,10 @@
+import { message } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Seat = ({ data, onBack }: any) => {
+const Seat = ({ data, onBack, dataMovie }: any) => {
     const [selectedSeats, setSelectedSeats] = useState<{ id: string, price: number }[]>([]);
-
+    const navigate = useNavigate();
     const getSeatColor = (type: string, isSelected: boolean, isBooked: boolean) => {
         if (isBooked) return "bg-gray-400 text-black";
         if (isSelected) return "bg-slate-500";
@@ -29,6 +31,23 @@ const Seat = ({ data, onBack }: any) => {
 
     const totalPrice = selectedSeats.reduce((total, seat) => total + seat.price, 0);
 
+    const handlePayment = () => {
+        if (selectedSeats.length === 0) {
+            message.warning("Vui lòng chọn ghế trước khi thanh toán");
+            return;
+        }
+        const paymentData = {
+            movie: {
+                title: dataMovie?.movie?.title,
+                poster: dataMovie?.movie?.poster,
+                startTime: data?.start_time,
+                cinemaHall: data?.cinemaHallId?.name,
+            },
+            selectedSeats,
+            totalPrice,
+        };
+        navigate("/payment", { state: paymentData });
+    }
     return (
         <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-center">
@@ -64,8 +83,6 @@ const Seat = ({ data, onBack }: any) => {
                         );
                     })}
                 </div>
-
-                {/* Chú thích màu ghế */}
                 <div className="flex justify-center gap-8 mt-6">
                     <div className="flex items-center gap-4">
                         <span className="border w-[40px] h-[40px] rounded-lg flex justify-center items-center">X</span>
@@ -89,8 +106,6 @@ const Seat = ({ data, onBack }: any) => {
                     </div>
                 </div>
             </div>
-
-            {/* Hiển thị ghế đã chọn và tổng tiền */}
             <div className="flex items-center justify-between gap-4 py-6">
                 <div>
                     <p>Ghế đã chọn: {selectedSeats.map(seat => seat.id).join(", ") || "Chưa chọn"}</p>
@@ -103,7 +118,7 @@ const Seat = ({ data, onBack }: any) => {
                     >
                         Quay lại
                     </button>
-                    <button className="px-8 p-2 rounded-full text-white font-medium bg-gradient-to-tr from-[#FF4747] to-[#6387FF]">
+                    <button onClick={handlePayment} className="px-8 p-2 rounded-full text-white font-medium bg-gradient-to-tr from-[#FF4747] to-[#6387FF]">
                         Thanh toán
                     </button>
                 </div>

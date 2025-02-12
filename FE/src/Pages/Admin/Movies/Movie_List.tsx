@@ -43,14 +43,18 @@ const Movie_List = () => {
             title: 'Tên Phim',
             dataIndex: 'title',
             key: 'title',
+            className: 'w-[150px]',
+
         },
+
         {
             title: 'Mô tả',
             dataIndex: 'description',
             key: 'description',
+            className: 'w-[260px]',
             render: (_: any, movie: any) => {
                 return (
-                    <p>{movie?.description?.slice(0, 50)}{movie?.description?.length > 50 ? "..." : ''}</p>
+                    <p className="line-clamp-2">{movie?.description}</p>
                 )
             }
         },

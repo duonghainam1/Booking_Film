@@ -10,7 +10,7 @@ import { useShow_time } from "../../../Common/Hook/Show_Time/useShow_time";
 
 const Show_Time_Edit = () => {
     const { id } = useParams();
-    const { mutate, contextHolder, isPending } = useMutation_Show_Time("EDIT");
+    const { mutate, contextHolder } = useMutation_Show_Time("EDIT");
     const { data } = useShow_time(id);
 
     const { data: movies } = useMovies();
@@ -50,7 +50,7 @@ const Show_Time_Edit = () => {
         }
     };
 
-    if (isPending) return <IsLoading />;
+    if (!data) return <IsLoading />;
 
     return (
         <div className="max-w-4xl mx-auto p-6">

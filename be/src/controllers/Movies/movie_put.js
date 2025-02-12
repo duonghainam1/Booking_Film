@@ -6,7 +6,7 @@ export const movie_put = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const { title, description, releaseDate, duration, actors, genres, director, language, poster, trailer_url, status, country } = req.body;
+        const { title, description, releaseDate, duration, actors, genres, director, language, poster, trailer_url, status, country, banner } = req.body;
         const existingMovie = await movie.findById(id);
         let updatedGenres = [];
         if (genres && genres.length > 0) {
@@ -28,7 +28,8 @@ export const movie_put = async (req, res) => {
             poster,
             trailer_url,
             status,
-            country
+            country,
+            banner,
         };
         await movie.findByIdAndUpdate(id, updateMovie, { new: true });
         res.status(StatusCodes.OK).json({ message: "Update successfully" });

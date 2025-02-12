@@ -22,6 +22,8 @@ import Show_Time_Edit from "../Pages/Admin/Show_Time/Show_Time_Edit"
 import CinemaHall_Add from "../Pages/Admin/CinemaHall/CinemaHall_Add"
 import CinemaHall_List from "../Pages/Admin/CinemaHall/CinemaHall_List"
 import CinemaHall_Edit from "../Pages/Admin/CinemaHall/CinemaHall_Edit"
+import PrivateRoute from "./PrivateRoute"
+import Payment from "../Pages/Client/Payment/Payment"
 
 
 const Router = () => {
@@ -33,11 +35,16 @@ const Router = () => {
                     <Route path="movies/:id" element={<Movie_Details />} />
                     <Route path="showTime" element={<Show_Schedule_Page />} />
                     <Route path="ticket" element={<Ticket_Page />} />
+                    <Route path="payment" element={<Payment />} />
                     <Route path="signin" element={<Sign_In />} />
                     <Route path="signup" element={<Sign_Up />} />
 
                 </Route>
-                <Route path="/admin" element={<Lay_Out_Admin />}>
+                <Route path="/admin" element={
+                    <PrivateRoute>
+                        <Lay_Out_Admin />
+                    </PrivateRoute>
+                }>
                     {/* Phim */}
                     <Route path="movie" element={<Movie_List />} />
                     <Route path="movie/add" element={<Movie_Add />} />

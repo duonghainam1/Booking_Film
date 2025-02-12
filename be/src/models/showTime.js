@@ -41,6 +41,13 @@ const showTimeSchema = new mongoose.Schema({
                 ref: "CinemaHall",
                 required: true,
             },
+            bookedSeats: [
+                {
+                    row: String,
+                    seatNumber: Number,
+                    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Auth" },
+                },
+            ],
         }]
     }]
 }, { timestamps: true, versionKey: false });

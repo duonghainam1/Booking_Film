@@ -1,11 +1,33 @@
-import poster from "../../../assets/img/Poster-phim-kinh-dị.jpg"
+import { Carousel } from 'antd'; // Import Carousel từ antd
+import { useMovies } from '../../../Common/Hook/Movies/useMovies';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
-    return (
-        <div>
-            <img src={poster} className="w-full" alt="" />
-        </div>
-    )
-}
+    const { data } = useMovies();
+    console.log(data);
 
-export default Banner
+    return (
+        <Carousel
+            autoplay
+            dotPosition="bottom"
+            arrows
+            infinite
+            effect="fade"
+        >
+            {data?.docs?.map((poster: any, index: number) => (
+                poster?.status === 'Showing' &&
+                <div key={index}>
+                    <Link to={`/movies/${poster._id}`}>
+                        <img
+                            src={poster?.banner}
+                            className="h-[650px] w-full object-cover"
+                            alt={`Poster ${index + 1}`}
+                        />
+                    </Link>
+                </div>
+            ))}
+        </Carousel>
+    );
+};
+
+export default Banner;

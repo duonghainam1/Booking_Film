@@ -52,3 +52,17 @@ export const sign_Up = async (req, res) => {
         user,
     });
 }
+
+export const logOut = async (req, res) => {
+    try {
+        res.clearCookie("token");
+        res.session.destroy((err) => {
+            if (err) {
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message });
+            }
+            return res.status(StatusCodes.OK).json({ message: "Đăng xuất thành công" });
+        });
+    } catch (error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
+    }
+}

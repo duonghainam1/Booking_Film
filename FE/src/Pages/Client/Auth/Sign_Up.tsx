@@ -69,14 +69,14 @@ const Sign_Up = () => {
                             name="password"
                             rules={[{ required: true, message: 'Please input your password!' }]}
                         >
-                            <Input placeholder="Mật khẩu" />
+                            <Input.Password placeholder="Mật khẩu" />
                         </Form.Item>
                         <Form.Item<FieldType>
                             label={<span className="text-white">Nhập lại mật khẩu</span>}
                             name="confirmPassword"
                             rules={[{ required: true, message: 'Please input your password!' }]}
                         >
-                            <Input placeholder="Nhập lại mật khẩu" />
+                            <Input.Password placeholder="Nhập lại mật khẩu" />
                         </Form.Item>
                     </div>
 

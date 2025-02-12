@@ -11,9 +11,9 @@ type FieldType = {
 
 const Sign_In = () => {
     const { mutate, contextHolder } = mutationAuth("SIGN_IN")
+
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         mutate(values)
-        console.log('Success:', values);
     };
     return (
         <div >
@@ -54,7 +54,7 @@ const Sign_In = () => {
                         className="mb-2"
                         rules={[{ required: true, message: 'Please input your password!' }]}
                     >
-                        <Input placeholder="Mật khẩu" />
+                        <Input.Password placeholder="Mật khẩu" />
                     </Form.Item>
                     <p className="text-white text-right mb-6">Quên mật khẩu</p>
 

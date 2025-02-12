@@ -6,7 +6,7 @@ const Lay_Out_Client = () => {
     return (
         <div className="bg-[#10141B] *:text-white">
             <Header_Client />
-            <main className="mt-[80 px]">
+            <main className="mt-[80px]">
                 <Outlet />
             </main>
             <Footer_Client />

@@ -41,6 +41,10 @@ const movieChema = new mongoose.Schema({
     trailer_url: {
         type: String
     },
+    banner: {
+        type: String,
+        required: true
+    },
     status: {
         type: String,
         enum: ['Showing', 'Coming_soon', 'Stop_showing'],
