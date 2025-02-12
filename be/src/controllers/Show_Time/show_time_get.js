@@ -1,4 +1,3 @@
-import { populate } from "dotenv";
 import ShowTime from "../../models/showTime.js";
 import { StatusCodes } from "http-status-codes";
 

@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import Movie from "../../models/movie.js";
 import ShowTime from "../../models/showTime.js";
-import CinemaHall from "../../models/cinemaHall.js"; // Import model phòng chiếu
+import CinemaHall from "../../models/cinemaHall.js";
 
 export const Show_Time_post = async (req, res) => {
     try {

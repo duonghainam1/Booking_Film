@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { logOut, sign_In, sign_Up } from "../../controllers/Auth/auth";
-import { auth_get, get_Auth_By_Id } from "../../controllers/Auth/auth_get";
+import { logOut, sign_In, sign_Up } from "../../controllers/Auth/auth.js";
+import { auth_get, get_Auth_By_Id } from "../../controllers/Auth/auth_get.js";
 
 const Router_auth = Router();
 Router_auth.post('/auth/sign_in', sign_In);

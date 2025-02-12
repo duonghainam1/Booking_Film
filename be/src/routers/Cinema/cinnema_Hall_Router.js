@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { cinemaHall_post } from '../../controllers/CinemaHall/cinemaHall_post';
-import { cinemaHall_get, cinemaHall_get_by_id } from '../../controllers/CinemaHall/cinemaHall_get';
-import { cinemaHall_put } from '../../controllers/CinemaHall/cinemaHall_put';
-import { cinemaHall_delete } from '../../controllers/CinemaHall/cinemaHall_delete';
+import { cinemaHall_post } from '../../controllers/CinemaHall/cinemaHall_post.js';
+import { cinemaHall_get, cinemaHall_get_by_id } from '../../controllers/CinemaHall/cinemaHall_get.js';
+import { cinemaHall_put } from '../../controllers/CinemaHall/cinemaHall_put.js';
+import { cinemaHall_delete } from '../../controllers/CinemaHall/cinemaHall_delete.js';
 
 
 const Router_Cinema_Hall = Router();
