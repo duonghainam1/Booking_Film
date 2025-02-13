@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-
+import mongoosePaginate from "mongoose-paginate-v2"
 
 const bookingSchema = new mongoose.Schema({
     userId: {
@@ -7,14 +7,23 @@ const bookingSchema = new mongoose.Schema({
         ref: "Auth",
         required: true,
     },
-    showTimeId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "ShowTime",
-        required: true,
+    orderNumber: {
+        type: String,
     },
-    movieId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Movie",
+    showTime: [
+        {
+            start_time: {
+                type: Date,
+                required: true,
+            },
+            cinemaHall: {
+                type: String,
+                required: true,
+            }
+        }
+    ],
+    movieTitle: {
+        type: String,
         required: true,
     },
     seats: [
@@ -35,9 +44,28 @@ const bookingSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ["cash", "VNPAY"],
+        enum: ["cash", "VNPAY", "VietQR"],
         default: "cash",
     },
+    paymentStatus: {  // Trạng thái thanh toán
+        type: String,
+        enum: ["pending", "paid", "failed"],
+        default: "pending",
+    },
+    vnpayTransactionId: { // Lưu lại mã giao dịch từ VNPay
+        type: String,
+    },
+    vnpayResponseCode: { // Lưu mã phản hồi của VNPay
+        type: String,
+    },
 }, { timestamps: true, versionKey: false });
-
+bookingSchema.pre('save', function (next) {
+    if (!this.isModified('orderNumber')) {
+        const timestamp = new Date().getTime();
+        const random = Math.floor(1000 + Math.random() * 9000);
+        this.orderNumber = `ORD-${timestamp}-${random}`;
+    }
+    next();
+});
+bookingSchema.plugin(mongoosePaginate);
 export default mongoose.model("Booking", bookingSchema);

@@ -24,6 +24,8 @@ import CinemaHall_List from "../Pages/Admin/CinemaHall/CinemaHall_List"
 import CinemaHall_Edit from "../Pages/Admin/CinemaHall/CinemaHall_Edit"
 import PrivateRoute from "./PrivateRoute"
 import Payment from "../Pages/Client/Payment/Payment"
+import Booking_List from "../Pages/Admin/Booking/Booking_List"
+import Thankyou from "../Components/Layouts/Thankyou"
 
 
 const Router = () => {
@@ -38,7 +40,8 @@ const Router = () => {
                     <Route path="payment" element={<Payment />} />
                     <Route path="signin" element={<Sign_In />} />
                     <Route path="signup" element={<Sign_Up />} />
-
+                    <Route path="thankyou" element={<Thankyou />} />
+                    <Route path="that_bai" element={<Sign_Up />} />
                 </Route>
                 <Route path="/admin" element={
                     <PrivateRoute>
@@ -63,6 +66,10 @@ const Router = () => {
                     <Route path="show_time/:id" element={<Show_Time_Edit />} />
                     {/* Phòng chiếu */}
                     <Route path="cinema-room" element={<CinemaHall_List />} />
+                    <Route path="cinema-room/add" element={<CinemaHall_Add />} />
+                    <Route path="cinema-room/:id" element={<CinemaHall_Edit />} />
+                    {/* Đặt vế */}
+                    <Route path="booking" element={<Booking_List />} />
                     <Route path="cinema-room/add" element={<CinemaHall_Add />} />
                     <Route path="cinema-room/:id" element={<CinemaHall_Edit />} />
                 </Route>

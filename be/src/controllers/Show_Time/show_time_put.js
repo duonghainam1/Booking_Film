@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import ShowTime from '../../models/showTime.js';
 import Movie from '../../models/movie.js';
+import CinemaHall from "../../models/cinemaHall.js";
 
 export const Show_Time_put = async (req, res) => {
     try {
@@ -23,6 +24,18 @@ export const Show_Time_put = async (req, res) => {
                 }
             }
         }
+        const cinemaHallIds = new Set();
+        dates.forEach(date => {
+            date.showtimes.forEach(showtime => {
+                cinemaHallIds.add(showtime.cinemaHallId);
+            });
+        });
+
+        // Cập nhật trạng thái của các phòng chiếu thành "đã chọn"
+        await CinemaHall.updateMany(
+            { _id: { $in: [...cinemaHallIds] } },
+            { $set: { status: "selected" } } // Bạn có thể thay "selected" bằng trạng thái phù hợp
+        );
         const showTime = await ShowTime.findByIdAndUpdate(id, {
             movieId,
             dates,

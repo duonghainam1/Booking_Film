@@ -1,17 +1,53 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Radio } from "antd";
+import { message, Radio } from "antd";
+import { nanoid } from "nanoid";
+
 import vietQr from "../../../assets/img/VietQR.png"
+import { useLocalStorage } from "../../../Common/Hook/useStorage";
+import { useMutation_Booking } from "../../../Common/Hook/Booking/useMutation_Booking";
+import instance from "../../../Configs/config_axios";
 const Payment = () => {
+    const [user,] = useLocalStorage("user", {});
+    const userId = user?.data?.user?._id;
     const location = useLocation();
     const paymentData = location.state;
-    console.log(paymentData);
-
+    const { mutate } = useMutation_Booking("ADD");
     const [paymentMethod, setPaymentMethod] = useState('');
 
     const handlePaymentMethodChange = (method: any) => {
         setPaymentMethod(method);
     };
+    const handlePayment = async () => {
+        if (paymentMethod === 'VNPAY') {
+            try {
+                const response = await instance.post('/createPayment', {
+                    userId: userId,
+                    orderId: nanoid(24),
+                    showTime: [{
+                        start_time: paymentData?.movie?.startTime,
+                        cinemaHall: paymentData?.movie?.cinemaHall,
+                    }],
+                    movieTitle: paymentData?.movie?.title,
+                    seats: paymentData?.selectedSeats.map((seat: any) => ({
+                        row: seat.row,
+                        seatNumber: seat.seatNumber,
+                        price: seat.price || 0,
+                    })),
+                    totalPrice: paymentData?.totalPrice,
+                    paymentMethod: paymentMethod,
+                });
+                if (response.data.paymentUrl) {
+                    window.location.href = response.data.paymentUrl;
+                }
+            } catch (error) {
+                message.error("Có lỗi xảy ra. Vui lòng thử lại.");
+            }
+        } else {
+            // Xử lý các phương thức thanh toán khác
+        }
+    };
+
     return (
         <div className="container mx-auto flex justify-between gap-8">
             <div className="w-[70%]">
@@ -30,7 +66,7 @@ const Payment = () => {
                                 </div>
                                 <div>
                                     <p>Ghế</p>
-                                    <p>{paymentData?.selectedSeats?.map((seat: any) => seat?.id).join(', ')}</p>
+                                    <p>{paymentData?.selectedSeats?.map((seat: any) => seat?.row + seat?.seatNumber).join(', ')}</p>
 
                                 </div>
                             </div>
@@ -64,7 +100,7 @@ const Payment = () => {
                             <tbody>
 
                                 <tr className="*:py-4 *:px-2">
-                                    <td>Ghế ({paymentData?.selectedSeats?.map((seat: any) => seat?.id).join(', ')})</td>
+                                    <td>Ghế ({paymentData?.selectedSeats?.map((seat: any) => seat?.row + seat?.seatNumber).join(', ')})</td>
                                     <td>{paymentData?.selectedSeats?.length}</td>
                                     <td>{paymentData?.totalPrice?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                                 </tr>
@@ -125,7 +161,7 @@ const Payment = () => {
                 </div>
 
                 <div className="mt-8">
-                    <button className="w-full bg-gradient-to-tr from-[#6387FF] to-[#FF4747] text-white font-bold rounded-full py-2 mt-4">Thanh toán</button>
+                    <button onClick={handlePayment} className="w-full bg-gradient-to-tr from-[#6387FF] to-[#FF4747] text-white font-bold rounded-full py-2 mt-4">Thanh toán</button>
                     <Link to="/ticket">
                         <button className="w-full bg-gradient-to-tr from-[#FF4747] to-[#6387FF] text-white font-bold rounded-full py-2 mt-4">Quay lại</button>
                     </Link>

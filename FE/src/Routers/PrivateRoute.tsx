@@ -8,13 +8,11 @@ interface CustomJwtPayload extends JwtPayload {
 
 const PrivateRoute = ({ children }: any) => {
     const token = localStorage.getItem('token')
-    console.log(token);
     if (!token) {
         return <Navigate to="/signin" />
     }
     try {
         const decode = jwtDecode<CustomJwtPayload>(token)
-        console.log("decode", decode);
         const role = decode.role
         if (role !== "admin") {
             message.error("Bạn không có quyền truy cập")

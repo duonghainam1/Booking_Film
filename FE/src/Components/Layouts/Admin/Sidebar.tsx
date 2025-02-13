@@ -1,4 +1,4 @@
-import { ClockCircleOutlined, FileTextOutlined, FolderOutlined, PieChartOutlined, TeamOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { CalendarOutlined, ClockCircleOutlined, FileTextOutlined, FolderOutlined, PieChartOutlined, TeamOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider"
 import { useState } from "react";
@@ -46,11 +46,11 @@ const items: MenuItem[] = [
         getItem(<NavLink to="/admin/cinema-room/add">Thêm phòng chiếu</NavLink>, '21'),
         // getItem('Sửa phòng chiếu', '14'),
     ]),
-    // getItem('Quản lý ghế', 'sub6', <CalendarOutlined />, [
-    //     getItem(<NavLink to="/admin/seat">Danh sách ghế</NavLink>, '18'),
-    //     getItem(<NavLink to="/admin/seat/add">Thêm ghế</NavLink>, '19'),
-    //     // getItem('Sửa lịch chiếu', '8'),
-    // ]),
+    getItem('Quản lý đơn hàng', 'sub6', <CalendarOutlined />, [
+        getItem(<NavLink to="/admin/booking">Danh sách đơn hàng</NavLink>, '18'),
+        // getItem(<NavLink to="/admin/seat/add">Thêm ghế</NavLink>, '19'),
+        // getItem('Sửa lịch chiếu', '8'),
+    ]),
     getItem('Quản tài khoản', 'sub5', <TeamOutlined />, [
         getItem('Tom', '15'),
         getItem('Bill', '16'),

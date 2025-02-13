@@ -3,8 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Seat = ({ data, onBack, dataMovie }: any) => {
-    const [selectedSeats, setSelectedSeats] = useState<{ id: string, price: number }[]>([]);
+
+    const [selectedSeats, setSelectedSeats] = useState<{ row: string, seatNumber: number, price: number }[]>([]);
     const navigate = useNavigate();
+
     const getSeatColor = (type: string, isSelected: boolean, isBooked: boolean) => {
         if (isBooked) return "bg-gray-400 text-black";
         if (isSelected) return "bg-slate-500";
@@ -18,14 +20,13 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
         }
     };
 
-    const handleSeatClick = (rowLetter: string, seatNumber: number, isBooked: boolean, price: number) => {
+    const handleSeatClick = (row: string, seatNumber: number, isBooked: boolean, price: number) => {
         if (isBooked) return;
 
-        const seatId = `${rowLetter}${seatNumber}`;
         setSelectedSeats((prev) =>
-            prev.some((seat) => seat.id === seatId)
-                ? prev.filter((seat) => seat.id !== seatId)
-                : [...prev, { id: seatId, price }]
+            prev.some((seat) => seat.row === row && seat.seatNumber === seatNumber)
+                ? prev.filter((seat) => seat.row !== row || seat.seatNumber !== seatNumber)
+                : [...prev, { row, seatNumber, price }]
         );
     };
 
@@ -38,6 +39,8 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
         }
         const paymentData = {
             movie: {
+                movieId: dataMovie?.movie?._id,
+                showtimeId: dataMovie?.showtimes.map((item: any) => item._id),
                 title: dataMovie?.movie?.title,
                 poster: dataMovie?.movie?.poster,
                 startTime: data?.start_time,
@@ -47,7 +50,8 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
             totalPrice,
         };
         navigate("/payment", { state: paymentData });
-    }
+    };
+
     return (
         <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-center">
@@ -65,9 +69,8 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
                         return (
                             <div key={rowIndex} className="flex justify-center gap-4 mb-4">
                                 {row.seats.map((seat: any, seatIndex: number) => {
-                                    const seatId = `${rowLetter}${seat.number}`;
-                                    const isSelected = selectedSeats.some((s) => s.id === seatId);
-                                    const isBooked = seat.isBooked; // Giả sử backend gửi `isBooked = true` nếu ghế đã đặt
+                                    const isSelected = selectedSeats.some((s) => s.row === rowLetter && s.seatNumber === seat.number);
+                                    const isBooked = seat.isBooked;
 
                                     return (
                                         <div
@@ -83,6 +86,8 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
                         );
                     })}
                 </div>
+
+                {/* Legend */}
                 <div className="flex justify-center gap-8 mt-6">
                     <div className="flex items-center gap-4">
                         <span className="border w-[40px] h-[40px] rounded-lg flex justify-center items-center">X</span>
@@ -106,9 +111,11 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
                     </div>
                 </div>
             </div>
+
+            {/* Chọn ghế và thanh toán */}
             <div className="flex items-center justify-between gap-4 py-6">
                 <div>
-                    <p>Ghế đã chọn: {selectedSeats.map(seat => seat.id).join(", ") || "Chưa chọn"}</p>
+                    <p>Ghế đã chọn: {selectedSeats.map(seat => `${seat.row}${seat.seatNumber}`).join(", ") || "Chưa chọn"}</p>
                     <p>Tổng tiền: {totalPrice.toLocaleString()} VND</p>
                 </div>
                 <div className="flex gap-4">

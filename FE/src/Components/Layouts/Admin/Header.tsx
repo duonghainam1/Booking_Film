@@ -7,8 +7,6 @@ const Header_Admin = () => {
     const [user] = useLocalStorage("user", {});
     const userId = user?.data?.user?._id;
     const { data } = useAuth(userId)
-    console.log(data?.data?.user?.avatar);
-
     return (
         <div className="flex items-center justify-end px-4 pt-4">
             <Search className="w-[350px] pr-3" placeholder="input search text" onSearch={value => console.log(value)} enterButton />
