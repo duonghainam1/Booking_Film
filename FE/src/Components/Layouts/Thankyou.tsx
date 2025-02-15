@@ -2,16 +2,17 @@ import { Button, Result } from "antd"
 
 const Thankyou = () => {
     return (
-        <div>
+        <div className="container mx-auto flex justify-center items-center h-screen">
             <Result
+                className="bg-white rounded-xl w-[800px]"
                 status="success"
-                title="Successfully Purchased Cloud Server ECS!"
-                subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+                title="Bạn đã thanh toán thành công!"
+                subTitle="Chúng tôi sẽ gửi vé vào email của bạn"
                 extra={[
                     <Button type="primary" key="console">
-                        Go Console
+                        Trang chủ
                     </Button>,
-                    <Button key="buy">Buy Again</Button>,
+                    <Button key="buy">Thông tin vé</Button>,
                 ]}
             />
         </div>

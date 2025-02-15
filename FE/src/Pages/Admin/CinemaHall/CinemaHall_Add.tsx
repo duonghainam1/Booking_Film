@@ -37,7 +37,7 @@ const CinemaHall_Add = () => {
                 seats: Array(newCols).fill(null).map((_, j) => ({
                     number: j + 1,
                     type: "Standard",
-                    price: defaultPrices["Standard"], // set default price for Standard seat
+                    price: defaultPrices["Standard"],
                 })),
             });
         }
@@ -51,7 +51,7 @@ const CinemaHall_Add = () => {
                 row.seats.push({
                     number: row.seats.length + 1,
                     type: "Standard",
-                    price: defaultPrices["Standard"], // set default price for Standard seat
+                    price: defaultPrices["Standard"],
                 });
             }
             while (row.seats.length > newCols) {

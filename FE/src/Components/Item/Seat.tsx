@@ -1,12 +1,12 @@
 import { message } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Seat = ({ data, onBack, dataMovie }: any) => {
 
     const [selectedSeats, setSelectedSeats] = useState<{ row: string, seatNumber: number, price: number }[]>([]);
     const navigate = useNavigate();
-
+    const [timeLeft, setTimeLeft] = useState(10 * 60);
     const getSeatColor = (type: string, isSelected: boolean, isBooked: boolean) => {
         if (isBooked) return "bg-gray-400 text-black";
         if (isSelected) return "bg-slate-500";
@@ -52,13 +52,30 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
         navigate("/payment", { state: paymentData });
     };
 
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                if (prev <= 1) {
+                    clearInterval(timer);
+                    navigate('/');
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [navigate]);
+
+    const formatTime = (seconds: any) => `${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? '0' : ''}${seconds % 60}`;
     return (
         <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-center">
                 <button>
                     Giờ chiếu: <span className="font-medium text-lg">{new Date(data.start_time).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}</span>
                 </button>
-                <button className="border p-2 rounded-lg w-[200px]">Thời gian chọn ghế: 10:00</button>
+                <button className="border border-red-800 p-2 rounded-xl w-[220px]">Thời gian chọn ghế: <span className="font-bold text-red-500 text-xl">{formatTime(timeLeft)}</span></button>
             </div>
 
             <div>

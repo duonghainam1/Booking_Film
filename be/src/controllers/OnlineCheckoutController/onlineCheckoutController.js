@@ -73,7 +73,6 @@ export const createPaymentUrl = async (req, res, next) => {
 
 export const returnUrll = async (req, res) => {
     let vnp_Params = req.query;
-
     const secureHash = vnp_Params['vnp_SecureHash'];
     delete vnp_Params['vnp_SecureHash'];
     delete vnp_Params['vnp_SecureHashType'];
@@ -92,12 +91,10 @@ export const returnUrll = async (req, res) => {
                 booking.vnpayTransactionId = vnp_TransactionNo;
                 booking.vnpayResponseCode = vnp_Params.vnp_ResponseCode;
                 booking.status = "completed";
-
-                await booking.save();
-
                 const qrCodeData = `Mã đơn: ${booking.orderNumber} - Ghế: ${booking.seats.map(s => `${s.row}${s.seatNumber}`).join(", ")}`;
                 const qrCodeUrl = await QRCode.toDataURL(qrCodeData);
-                console.log("dsdsdasdas", qrCodeUrl);
+                booking.qrCodeUrl = qrCodeUrl;
+                await booking.save();
 
                 await sendConfirmationEmail(booking, qrCodeUrl);
 

@@ -22,7 +22,7 @@ const Show_Time_Add = () => {
     const cinemaHallOptions = cinemaHalls?.docs
         .filter((cinemaHall: any) => cinemaHall.status === "active")
         .map((cinemaHall: any) => ({
-            label: `${cinemaHall.name} - ${cinemaHall.cinemaId.name}`,
+            label: `${cinemaHall.name}`,
             value: cinemaHall._id,
         }));
 

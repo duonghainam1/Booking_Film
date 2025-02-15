@@ -3,7 +3,6 @@ import { createPaymentUrl, returnUrll } from '../controllers/OnlineCheckoutContr
 
 const Router_OnlPayment = express.Router();
 
-
 Router_OnlPayment.post('/createPayment', createPaymentUrl)
 Router_OnlPayment.get('/return', returnUrll);
 

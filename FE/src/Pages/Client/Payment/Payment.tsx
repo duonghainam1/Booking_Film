@@ -5,20 +5,24 @@ import { nanoid } from "nanoid";
 
 import vietQr from "../../../assets/img/VietQR.png"
 import { useLocalStorage } from "../../../Common/Hook/useStorage";
-import { useMutation_Booking } from "../../../Common/Hook/Booking/useMutation_Booking";
+// import { useMutation_Booking } from "../../../Common/Hook/Booking/useMutation_Booking";
 import instance from "../../../Configs/config_axios";
 const Payment = () => {
     const [user,] = useLocalStorage("user", {});
     const userId = user?.data?.user?._id;
     const location = useLocation();
     const paymentData = location.state;
-    const { mutate } = useMutation_Booking("ADD");
+    // const { mutate } = useMutation_Booking("ADD");
     const [paymentMethod, setPaymentMethod] = useState('');
 
     const handlePaymentMethodChange = (method: any) => {
         setPaymentMethod(method);
     };
     const handlePayment = async () => {
+        if (!paymentMethod) {
+            message.warning("Vui lòng chọn phương thức thanh toán");
+            return;
+        }
         if (paymentMethod === 'VNPAY') {
             try {
                 const response = await instance.post('/createPayment', {
@@ -44,7 +48,6 @@ const Payment = () => {
                 message.error("Có lỗi xảy ra. Vui lòng thử lại.");
             }
         } else {
-            // Xử lý các phương thức thanh toán khác
         }
     };
 

@@ -203,9 +203,9 @@ const CinemaHall_Edit = () => {
                                                         setSeatLayout(updatedLayout);
                                                     }}
                                                 >
-                                                    <Option value="VIP"><div className="bg-yellow-400 w-5 h-5"></div></Option>
-                                                    <Option value="Standard"><div className="bg-blue-500 w-5 h-5"></div></Option>
-                                                    <Option value="Couple"><div className="bg-red-500 w-5 h-5"></div></Option>
+                                                    <Option value="VIP"><div className="bg-yellow-400 w-5 h-5 rounded-md"></div></Option>
+                                                    <Option value="Standard"><div className="bg-blue-500 w-5 h-5 rounded-md"></div></Option>
+                                                    <Option value="Couple"><div className="bg-red-500 w-5 h-5 rounded-md"></div></Option>
                                                 </Select>
                                                 <Input
                                                     type="number"

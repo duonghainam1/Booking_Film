@@ -73,7 +73,7 @@ const Header_Client = () => {
                     )}
                     {isOpened && (
                         <div className='flex flex-col gap-4 border border-slate-800 rounded-lg w-[200px] absolute top-12 right-0 bg-[#10141B] p-4 '>
-                            <Link to="" className='hover:text-red-500'>Thông tin cá nhân</Link>
+                            <Link to="/profile" className='hover:text-red-500'>Thông tin cá nhân</Link>
                             {data?.data?.user?.role === "admin" && (
                                 <Link to="/admin" className='hover:text-red-500'>Trang quản trị</Link>
                             )}

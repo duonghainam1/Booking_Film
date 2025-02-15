@@ -26,3 +26,11 @@ export const booking_get_by_id = async (id: string | number) => {
         return error
     }
 }
+export const booking_get_userId = async (userId: string | number) => {
+    try {
+        const { data } = await instance.get(`/booking/user/${userId}`)
+        return data
+    } catch (error) {
+        return error
+    }
+}

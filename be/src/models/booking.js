@@ -47,15 +47,18 @@ const bookingSchema = new mongoose.Schema({
         enum: ["cash", "VNPAY", "VietQR"],
         default: "cash",
     },
-    paymentStatus: {  // Trạng thái thanh toán
+    paymentStatus: {
         type: String,
         enum: ["pending", "paid", "failed"],
         default: "pending",
     },
-    vnpayTransactionId: { // Lưu lại mã giao dịch từ VNPay
+    qrCodeUrl: {
         type: String,
     },
-    vnpayResponseCode: { // Lưu mã phản hồi của VNPay
+    vnpayTransactionId: {
+        type: String,
+    },
+    vnpayResponseCode: {
         type: String,
     },
 }, { timestamps: true, versionKey: false });

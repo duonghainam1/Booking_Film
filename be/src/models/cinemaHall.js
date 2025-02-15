@@ -23,7 +23,7 @@ const cinemaHallSchema = new mongoose.Schema({
             seats: [{
                 number: { type: Number, required: true },
                 type: { type: String, required: true },
-                price: { type: Number, required: true }, // Thêm trường giá tiền
+                price: { type: Number }, // Thêm trường giá tiền
                 isBooked: { type: Boolean, default: false }, // Trạng thái ghế
             }]
         }

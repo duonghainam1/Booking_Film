@@ -35,3 +35,16 @@ export const booking_Get_by_id = async (req, res) => {
         res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
     }
 }
+
+export const booking_get_userId = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const booking = await Booking.find({ userId: userId });
+        if (!booking) {
+            return res.status(StatusCodes.NOT_FOUND).json({ message: 'Không tìm thấy vé' });
+        }
+        return res.status(StatusCodes.OK).json(booking);
+    } catch (error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
+    }
+}

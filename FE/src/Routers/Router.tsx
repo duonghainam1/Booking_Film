@@ -26,6 +26,7 @@ import PrivateRoute from "./PrivateRoute"
 import Payment from "../Pages/Client/Payment/Payment"
 import Booking_List from "../Pages/Admin/Booking/Booking_List"
 import Thankyou from "../Components/Layouts/Thankyou"
+import Page from "../Pages/Client/Profile/Page"
 
 
 const Router = () => {
@@ -40,6 +41,7 @@ const Router = () => {
                     <Route path="payment" element={<Payment />} />
                     <Route path="signin" element={<Sign_In />} />
                     <Route path="signup" element={<Sign_Up />} />
+                    <Route path="profile" element={<Page />} />
                     <Route path="thankyou" element={<Thankyou />} />
                     <Route path="that_bai" element={<Sign_Up />} />
                 </Route>
