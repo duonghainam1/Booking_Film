@@ -12,6 +12,8 @@ const Payment = () => {
     const userId = user?.data?.user?._id;
     const location = useLocation();
     const paymentData = location.state;
+    console.log("fhdskjfhsdk", paymentData);
+
     // const { mutate } = useMutation_Booking("ADD");
     const [paymentMethod, setPaymentMethod] = useState('');
 
@@ -29,6 +31,7 @@ const Payment = () => {
                     userId: userId,
                     orderId: nanoid(24),
                     showTime: [{
+                        showtimeId: paymentData?.movie?.showtimeId,
                         start_time: paymentData?.movie?.startTime,
                         cinemaHall: paymentData?.movie?.cinemaHall,
                     }],

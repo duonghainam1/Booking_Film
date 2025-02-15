@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Seat = ({ data, onBack, dataMovie }: any) => {
-
     const [selectedSeats, setSelectedSeats] = useState<{ row: string, seatNumber: number, price: number }[]>([]);
     const navigate = useNavigate();
     const [timeLeft, setTimeLeft] = useState(10 * 60);
@@ -40,7 +39,7 @@ const Seat = ({ data, onBack, dataMovie }: any) => {
         const paymentData = {
             movie: {
                 movieId: dataMovie?.movie?._id,
-                showtimeId: dataMovie?.showtimes.map((item: any) => item._id),
+                showtimeId: data?._id,
                 title: dataMovie?.movie?.title,
                 poster: dataMovie?.movie?.poster,
                 startTime: data?.start_time,

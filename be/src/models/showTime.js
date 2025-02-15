@@ -36,18 +36,19 @@ const showTimeSchema = new mongoose.Schema({
                 enum: ["scheduled", "ongoing", "completed", "canceled"],
                 default: "scheduled",
             },
+
             cinemaHallId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "CinemaHall",
                 required: true,
             },
-            bookedSeats: [
-                {
-                    row: String,
-                    seatNumber: Number,
-                    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Auth" },
-                },
-            ],
+            // bookedSeats: [
+            //     {
+            //         row: String,
+            //         seatNumber: Number,
+            //         userId: { type: mongoose.Schema.Types.ObjectId, ref: "Auth" },
+            //     },
+            // ],
         }]
     }]
 }, { timestamps: true, versionKey: false });

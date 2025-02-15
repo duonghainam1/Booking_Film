@@ -5,6 +5,7 @@ import express from "express";
 import Booking from "../../models/booking.js";
 import nodemailer from "nodemailer";
 import QRCode from "qrcode";
+import { cinemaHall_update_seat } from "../CinemaHall/cinemaHall_put.js";
 const app = express();
 const tmnCode = "76Q18QBZ";
 const secretKey = "CMFMW4TMIB2BSOILMO4FLWA1PILU718G";
@@ -94,9 +95,10 @@ export const returnUrll = async (req, res) => {
                 const qrCodeData = `Mã đơn: ${booking.orderNumber} - Ghế: ${booking.seats.map(s => `${s.row}${s.seatNumber}`).join(", ")}`;
                 const qrCodeUrl = await QRCode.toDataURL(qrCodeData);
                 booking.qrCodeUrl = qrCodeUrl;
+                await cinemaHall_update_seat(booking);
                 await booking.save();
 
-                await sendConfirmationEmail(booking, qrCodeUrl);
+                // await sendConfirmationEmail(booking, qrCodeUrl);
 
                 return res.redirect("http://localhost:2024/thankyou");
             } else {

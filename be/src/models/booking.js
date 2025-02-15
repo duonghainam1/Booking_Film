@@ -19,7 +19,12 @@ const bookingSchema = new mongoose.Schema({
             cinemaHall: {
                 type: String,
                 required: true,
+            },
+            showtimeId: {
+                type: String,
+                required: true,
             }
+
         }
     ],
     movieTitle: {

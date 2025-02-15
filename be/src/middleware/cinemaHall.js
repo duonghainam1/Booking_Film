@@ -31,7 +31,30 @@ const updateShowTimeAndCinemaHallStatus = async () => {
     }
 };
 
+const updateSeat = async () => {
+    const now = new Date();
+    const showTimes = await ShowTime.find({
+        'dates.showtimes.end_time': { $lte: now },
+        'dates.showtimes.status': { $ne: 'completed' }
+    });
+
+    for (const showTime of showTimes) {
+        for (const date of showTime.dates) {
+            for (const showtime of date.showtimes) {
+                if (showtime.end_time <= now) {
+                    showtime.status = 'completed';
+                    await CinemaHall.updateOne(
+                        { _id: showtime.cinemaHallId },
+                        { $set: { 'seatLayout.$[].seats.$[].isBooked': false } }
+                    );
+                }
+            }
+        }
+        await showTime.save();
+    }
+}
 cron.schedule('* * * * *', () => {
     console.log("Đã cập nhật trạng thái suất chiếu và phòng chiếu");
     updateShowTimeAndCinemaHallStatus();
+    updateSeat()
 });

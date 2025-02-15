@@ -28,6 +28,7 @@ const Show_Time_Add = () => {
 
 
     const onFinish = (values: any) => {
+
         try {
             const payload = {
                 ...values,
@@ -36,11 +37,32 @@ const Show_Time_Add = () => {
                     showtimes: date.showtimes.map((showtime: any) => ({
                         start_time: showtime.start_time.toISOString(),
                         end_time: showtime.end_time.toISOString(),
-                        // price: showtime.price,
                         cinemaHallId: showtime.cinemaHallId,
                     })),
                 })),
             };
+
+            const seenShowtimes = new Map();
+            for (const date of payload.dates) {
+                for (const showtime of date.showtimes) {
+                    const key = `${date.date}-${showtime.cinemaHallId}`;
+                    if (!seenShowtimes.has(key)) {
+                        seenShowtimes.set(key, []);
+                    }
+                    const existingShowtimes = seenShowtimes.get(key);
+                    const isOverlapping = existingShowtimes.some((existing: any) => {
+                        return (
+                            (showtime.start_time < existing.end_time) &&
+                            (showtime.end_time > existing.start_time)
+                        );
+                    });
+                    if (isOverlapping) {
+                        message.error(`Phòng chiếu đã trùng thời gian suất chiếu `);
+                        return;
+                    }
+                    existingShowtimes.push(showtime);
+                }
+            }
             mutate(payload);
             form.resetFields();
             message.success("Thêm lịch chiếu thành công!");
@@ -48,6 +70,7 @@ const Show_Time_Add = () => {
             message.error("Thêm lịch chiếu thất bại!");
         }
     };
+
 
     if (isPending) return <IsLoading />;
 
