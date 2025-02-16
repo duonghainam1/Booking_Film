@@ -27,6 +27,9 @@ const Lay_Out_Admin = () => {
         '/admin/cinema-room': 'Danh sách phòng chiếu',
         '/admin/cinema-room/add': 'Thêm phòng chiếu',
         '/admin/cinema-room/:id': 'Chỉnh sửa phòng chiếu',
+        '/admin/booking': 'Danh sách đặt vé',
+        '/admin/booking/add': 'Thêm phòng chiếu',
+        '/admin/booking/:id': 'Chỉnh sửa phòng chiếu',
     };
     const pathSnippets = location.pathname.split('/').filter(i => i);
     const breadcrumbItems = pathSnippets.map((_, index) => {

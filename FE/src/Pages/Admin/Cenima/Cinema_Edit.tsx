@@ -51,14 +51,14 @@ const Cinema_Edit = () => {
                     <Input placeholder="Nhập tên phòng chiếu" />
                 </Form.Item>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <Form.Item
+                <div className="grid grid-cols-3 gap-4">
+                    {/* <Form.Item
                         label="Điạ chỉ"
                         name="location"
                         rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
                     >
                         <Input placeholder="Nhập tên địa chỉ" />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         label="Thời gian mở cửa"
                         name="opening_hours"
@@ -66,8 +66,7 @@ const Cinema_Edit = () => {
                     >
                         <Input className="w-full" placeholder="Nhập thời gian mở cửa" />
                     </Form.Item>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
+
                     <Form.Item
                         label="Số điện thoại"
                         name="phone_number"

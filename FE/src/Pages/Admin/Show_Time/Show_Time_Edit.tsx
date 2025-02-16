@@ -22,12 +22,12 @@ const Show_Time_Edit = () => {
             label: movie.title,
             value: movie._id,
         }));
-    const cinemaHallOptions = cinemaHalls?.docs
-        .filter((cinemaHall: any) => cinemaHall.status === "active")
-        .map((cinemaHall: any) => ({
-            label: `${cinemaHall.name}`,
-            value: cinemaHall._id,
-        }));
+    // .filter((cinemaHall: any) => cinemaHall.status === "active")
+
+    const cinemaHallOptions = cinemaHalls?.docs.map((cinemaHall: any) => ({
+        label: `${cinemaHall.name}`,
+        value: cinemaHall._id,
+    }));
 
     const onFinish = (values: any) => {
         try {
@@ -43,6 +43,27 @@ const Show_Time_Edit = () => {
                     })),
                 })),
             };
+            const seenShowtimes = new Map();
+            for (const date of payload.dates) {
+                for (const showtime of date.showtimes) {
+                    const key = `${date.date}-${showtime.cinemaHallId}`;
+                    if (!seenShowtimes.has(key)) {
+                        seenShowtimes.set(key, []);
+                    }
+                    const existingShowtimes = seenShowtimes.get(key);
+                    const isOverlapping = existingShowtimes.some((existing: any) => {
+                        return (
+                            (showtime.start_time < existing.end_time) &&
+                            (showtime.end_time > existing.start_time)
+                        );
+                    });
+                    if (isOverlapping) {
+                        message.error(`Phòng chiếu đã trùng thời gian suất chiếu `);
+                        return;
+                    }
+                    existingShowtimes.push(showtime);
+                }
+            }
             mutate(payload);
             message.success("Cập nhật lịch chiếu thành công!");
         } catch (error) {

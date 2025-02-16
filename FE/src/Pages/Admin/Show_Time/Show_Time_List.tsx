@@ -1,20 +1,23 @@
-import { Popconfirm, Space, Table, Tag } from "antd";
+import { Input, Popconfirm, Space, Table, Tag } from "antd";
 import { Link, useSearchParams } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import IsLoading from "../../../Components/Loading/IsLoading";
 import { useEffect, useState } from "react";
 import { useShow_time } from "../../../Common/Hook/Show_Time/useShow_time";
 import { useMutation_Show_Time } from "../../../Common/Hook/Show_Time/useMutation_Show_Time";
-
+const { Search } = Input;
 const Show_Time_List = () => {
     const { mutate, contextHolder } = useMutation_Show_Time("DELETE")
     const [searchParmas, setSearchParams] = useSearchParams()
     const currentPageUrl = searchParmas.get('page') ? Number(searchParmas.get('page')) : 1;
     const pageSizeUrl = searchParmas.get('pageSize') ? Number(searchParmas.get('pageSize')) : 10;
+    const searchUrl = searchParmas.get('search') || "";
+
     const [currenPage, setCurrentPage] = useState(currentPageUrl);
     const [pageSize, setPageSize] = useState(pageSizeUrl);
-    const { data, isLoading, totalDocs } = useShow_time(undefined, currenPage, pageSize, '')
-    console.log(data);
+    const [search, setSearch] = useState(searchUrl);
+
+    const { data, isLoading, totalDocs } = useShow_time(undefined, currenPage, pageSize, search)
 
     useEffect(() => {
         const params: any = {}
@@ -24,12 +27,19 @@ const Show_Time_List = () => {
         if (pageSize !== 4) {
             params['pageSize'] = pageSize;
         }
+        if (search) params['search'] = search;
+
         setSearchParams(params)
     }, [
         currenPage,
         pageSize,
+        search,
         setSearchParams
     ])
+    const handleSearch = (value: string) => {
+        setSearch(value);
+        setCurrentPage(1);
+    };
     const columns: any = [
         {
             title: 'Tên Phim',
@@ -132,7 +142,11 @@ const Show_Time_List = () => {
             {contextHolder}
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">Danh sách lịch chiếu</h1>
-                <Link to="/admin/show_time/add" className="bg-blue-500 text-white p-2 rounded-md font-medium">Thêm</Link>
+                <div className="flex items-center gap-4">
+                    <Search placeholder="Tìm kiếm phim" allowClear style={{ width: 400 }} onSearch={handleSearch} defaultValue={search} />
+                    <Link to="/admin/show_time/add" className="bg-blue-500 text-white p-2 rounded-md font-medium">Thêm</Link>
+
+                </div>
             </div>
             <Table dataSource={dataSource} columns={columns} pagination={{
                 current: currenPage,

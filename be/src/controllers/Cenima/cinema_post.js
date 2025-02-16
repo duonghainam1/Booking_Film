@@ -3,8 +3,8 @@ import Cinema from "../../models/cinema.js";
 
 export const cinema_post = async (req, res) => {
     try {
-        const { name, location, phone_number, email, opening_hours } = req.body;
-        if (!name || !location || !phone_number || !email || !opening_hours) {
+        const { name, phone_number, email, opening_hours } = req.body;
+        if (!name || !phone_number || !email || !opening_hours) {
             return res.status(StatusCodes.BAD_REQUEST).json({ message: "Vui lòng điền đầy đủ tất cả thông tin" });
         }
         const newCinema = await Cinema.create({

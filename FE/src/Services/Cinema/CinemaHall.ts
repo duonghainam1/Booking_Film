@@ -23,9 +23,8 @@ export const CinemaHall_Create = async (cinema: any) => {
         const data = await instance.post(`/cinema-room`, cinema)
         return data
     } catch (error: any) {
-        // Trả lại thông báo lỗi từ backend
         if (error?.response?.data?.message) {
-            throw new Error(error.response.data.message) // Đảm bảo lỗi từ backend được ném ra
+            throw new Error(error.response.data.message)
         }
         throw new Error("Có lỗi xảy ra, vui lòng thử lại!")
     }

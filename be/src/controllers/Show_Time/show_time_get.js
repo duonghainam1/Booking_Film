@@ -1,6 +1,6 @@
 import ShowTime from "../../models/showTime.js";
 import { StatusCodes } from "http-status-codes";
-
+import Movie from "../../models/movie.js";
 export const show_time_get = async (req, res) => {
     const { _page = 1, _limit = 12, _search } = req.query;
     try {
@@ -18,7 +18,9 @@ export const show_time_get = async (req, res) => {
         };
         const query = {};
         if (_search) {
-            query.name = { $regex: _search, $options: "i" };
+            const movies = await Movie.find({ title: { $regex: _search, $options: "i" } }).select("_id");
+            const movieIds = movies.map(m => m._id);
+            query.movieId = { $in: movieIds };
         }
         const showTime = await ShowTime.paginate(query, option);
         return res.status(StatusCodes.OK).json(showTime);

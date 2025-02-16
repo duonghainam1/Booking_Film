@@ -26,9 +26,7 @@ const Show_Time_Add = () => {
             value: cinemaHall._id,
         }));
 
-
     const onFinish = (values: any) => {
-
         try {
             const payload = {
                 ...values,

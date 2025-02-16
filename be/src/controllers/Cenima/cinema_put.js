@@ -3,11 +3,10 @@ import Cinema from '../../models/cinema.js';
 
 export const cinema_put = async (req, res) => {
     const { id } = req.params;
-    const { name, location, phone_number, email, total_seats, opening_hours } = req.body;
+    const { name, phone_number, email, total_seats, opening_hours } = req.body;
     try {
         const update_Cinema = {
             name,
-            location,
             phone_number,
             email,
             total_seats,

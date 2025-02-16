@@ -6,10 +6,10 @@ const cinemaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    location: {
-        type: String,
-        required: true,
-    },
+    // location: {
+    //     type: String,
+    //     required: true,
+    // },
 
     // total_seats: {
     //     type: Number,

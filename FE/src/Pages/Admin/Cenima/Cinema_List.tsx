@@ -36,12 +36,12 @@ const Cinema_List = () => {
             dataIndex: 'name',
             key: 'name',
         },
-        {
-            title: 'Địa chỉ',
-            dataIndex: 'location',
-            key: 'location',
+        // {
+        //     title: 'Địa chỉ',
+        //     dataIndex: 'location',
+        //     key: 'location',
 
-        },
+        // },
         {
             title: 'Email',
             dataIndex: 'email',

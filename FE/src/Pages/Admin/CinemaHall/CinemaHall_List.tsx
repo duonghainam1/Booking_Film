@@ -38,8 +38,8 @@ const CinemaHall_List = () => {
 
 
     const renderSeatLayout = (seatLayout: any) => {
-        if (!seatLayout || seatLayout.length === 0) return null;
-        const maxSeats = Math.max(...seatLayout.map((row: any) => row.seats.length));
+        if (!seatLayout || seatLayout?.length === 0) return null;
+        const maxSeats = Math?.max(...seatLayout?.map((row: any) => row?.seats?.length));
         const getSeatColor = (type: any) => {
             switch (type) {
                 case "VIP":
@@ -67,9 +67,9 @@ const CinemaHall_List = () => {
                         {row.seats.map((seat: any, seatIndex: any) => (
                             <div
                                 key={seatIndex}
-                                className={`w-12 h-8 flex items-center justify-center text-white ${getSeatColor(seat.type)} m-1 rounded`}
+                                className={`w-12 h-8 flex items-center justify-center text-white ${getSeatColor(seat?.type)} m-1 rounded`}
                             >
-                                {row.row}{seat.number}
+                                {row?.row}{seat?.number}
                             </div>
                         ))}
                     </div>
@@ -87,7 +87,7 @@ const CinemaHall_List = () => {
             dataIndex: "cinemaId",
             key: "cinemaId",
             render: (_: any, cinemaHall: any) => {
-                return <span>{cinemaHall.cinemaId.name}</span>
+                return <span>{cinemaHall?.cinemaId?.name}</span>
             }
         },
         {
@@ -105,7 +105,7 @@ const CinemaHall_List = () => {
             dataIndex: "status",
             key: "status",
             render: (_: any, cinemaHall: any) => {
-                return <span>{cinemaHall.status === "active" ? "Hoạt động" : "Không hoạt động"}</span>
+                return <span>{cinemaHall?.status === "active" ? "Hoạt động" : "Không hoạt động"}</span>
             }
         },
         {
@@ -116,7 +116,7 @@ const CinemaHall_List = () => {
             render: (_: any, cinemaHall: any) => {
                 return (
                     <Card className="p-2">
-                        {renderSeatLayout(cinemaHall.seatLayout)}
+                        {renderSeatLayout(cinemaHall?.seatLayout)}
                         <div className="flex justify-center gap-4 mt-4">
                             <div className="flex flex-col items-center gap-2">
                                 <span className="bg-yellow-500 w-6 h-6 rounded-md"></span>
@@ -150,11 +150,11 @@ const CinemaHall_List = () => {
                             title="Bạn có chắc chắn muốn xóa?"
                             okText="Có"
                             cancelText="Không"
-                            onConfirm={() => mutate(cinema._id)}
+                            onConfirm={() => mutate(cinema?._id)}
                         >
                             <DeleteOutlined style={{ fontSize: 20 }} />
                         </Popconfirm>
-                        <Link to={`/admin/cinema-room/${cinema._id}`}>
+                        <Link to={`/admin/cinema-room/${cinema?._id}`}>
                             <EditOutlined style={{ fontSize: 20 }} />
                         </Link>
                     </Space>
