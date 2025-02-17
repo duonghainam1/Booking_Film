@@ -98,7 +98,7 @@ export const returnUrll = async (req, res) => {
                 await cinemaHall_update_seat(booking);
                 await booking.save();
 
-                // await sendConfirmationEmail(booking, qrCodeUrl);
+                await sendConfirmationEmail(booking, qrCodeUrl);
 
                 return res.redirect("http://localhost:2024/thankyou");
             } else {
