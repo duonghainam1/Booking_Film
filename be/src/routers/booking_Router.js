@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { booking_Post } from '../controllers/Booking/booking_Post';
-import { booking_Get, booking_Get_by_id, booking_get_userId } from '../controllers/Booking/booking_Get';
+import { booking_Post } from '../controllers/Booking/booking_Post.js';
+import { booking_Get, booking_Get_by_id, booking_get_userId } from '../controllers/Booking/booking_Get.js';
 
 
 const Router_Booking = Router();
