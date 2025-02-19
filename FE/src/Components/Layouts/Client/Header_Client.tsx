@@ -50,9 +50,9 @@ const Header_Client = () => {
                     <li><Link to="/about" className="text-white transition-all duration-300 hover:text-red-500">Giới thiệu</Link></li>
                 </ul>
                 <div className='flex gap-6 relative'>
-                    <div className='flex items-center justify-center rounded-full w-12 h-12 hover:bg-[#6387FF] transition-all duration-300'>
-                        {/* <SearchOutlined style={{ fontSize: 24 }} /> */}
-                    </div>
+                    {/* <div className='flex items-center justify-center rounded-full w-12 h-12 hover:bg-[#6387FF] transition-all duration-300'>
+                        <SearchOutlined style={{ fontSize: 24 }} />
+                    </div> */}
                     {userId ? (
                         <div className="flex items-center gap-4">
                             <span className="text-white" onClick={handleOpen}>Xin chào, {data?.data?.user?.username} <DownOutlined className='text-sm' /></span>

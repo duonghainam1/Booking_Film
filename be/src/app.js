@@ -12,6 +12,7 @@ import Router_Cinema_Hall from "./routers/cinnema_Hall_Router.js";
 import "./middleware/cinemaHall.js"
 import Router_Booking from "./routers/booking_Router.js";
 import Router_OnlPayment from "./routers/online_payment.js";
+import Router_Dashboard from "./routers/dashboard_Router.js";
 
 const app = express();
 dotenv.config();
@@ -33,9 +34,11 @@ app.use("/api/v1", Router_Cinema_Hall)
 app.use("/api/v1", Router_show_time)
 app.use("/api/v1", Router_Booking)
 app.use("/api/v1", Router_OnlPayment)
+app.use("/api/v1", Router_Dashboard)
 
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-})
-// export const viteNodeApp = app;
+
+// app.listen(process.env.PORT, () => {
+//     console.log(`Server is running on port ${process.env.PORT}`);
+// })
+export const viteNodeApp = app;

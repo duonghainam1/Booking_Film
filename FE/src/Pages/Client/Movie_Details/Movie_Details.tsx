@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useMovies } from "../../../Common/Hook/Movies/useMovies";
 import { useEffect, useState } from "react";
 import Seat from "../../../Components/Item/Seat";
+import IsLoading from "../../../Components/Loading/IsLoading";
 
 const Movie_Details = () => {
     const { id } = useParams();
@@ -41,10 +42,12 @@ const Movie_Details = () => {
     const isShowtimeExpired = (startTime: string) => {
         const currentTime = new Date();
         const startTimeDate = new Date(startTime);
-        const timeDifference = (currentTime.getTime() - startTimeDate.getTime()) / (1000 * 60); // tính bằng phút
+        const timeDifference = (currentTime.getTime() - startTimeDate.getTime()) / (1000 * 60);
         return timeDifference > 10;
     };
-
+    if (!data) {
+        return <IsLoading />
+    }
     return (
         <div className="bg-black bg-opacity-50">
             <div className="relative">

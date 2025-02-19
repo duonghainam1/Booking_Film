@@ -9,7 +9,10 @@ export const show_time_get = async (req, res) => {
             limit: _limit,
             sort: { createdAt: -1 },
             populate: [
-                { path: "movieId" },
+                {
+                    path: "movieId",
+                    populate: { path: "genres" }
+                },
                 {
                     path: "dates.showtimes.cinemaHallId",
                     populate: { path: "cinemaId" }

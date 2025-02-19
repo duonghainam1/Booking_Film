@@ -1,4 +1,5 @@
 import { Button, Result } from "antd"
+import { Link } from "react-router-dom"
 
 const Thankyou = () => {
     return (
@@ -9,10 +10,15 @@ const Thankyou = () => {
                 title="Bạn đã thanh toán thành công!"
                 subTitle="Chúng tôi sẽ gửi vé vào email của bạn"
                 extra={[
-                    <Button type="primary" key="console">
-                        Trang chủ
-                    </Button>,
-                    <Button key="buy">Thông tin vé</Button>,
+                    <Link to="/">
+                        <Button type="primary" key="console">
+                            Trang chủ
+                        </Button>
+                    </Link>
+                    ,
+                    <Link to="/profile">
+                        <Button key="buy">Thông tin vé</Button>,
+                    </Link>
                 ]}
             />
         </div>

@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { message, Radio } from "antd";
 import { nanoid } from "nanoid";
-
 import vietQr from "../../../assets/img/VietQR.png"
 import { useLocalStorage } from "../../../Common/Hook/useStorage";
 // import { useMutation_Booking } from "../../../Common/Hook/Booking/useMutation_Booking";
@@ -12,8 +11,6 @@ const Payment = () => {
     const userId = user?.data?.user?._id;
     const location = useLocation();
     const paymentData = location.state;
-    console.log("fhdskjfhsdk", paymentData);
-
     // const { mutate } = useMutation_Booking("ADD");
     const [paymentMethod, setPaymentMethod] = useState('');
 

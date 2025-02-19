@@ -27,6 +27,7 @@ import Payment from "../Pages/Client/Payment/Payment"
 import Booking_List from "../Pages/Admin/Booking/Booking_List"
 import Thankyou from "../Components/Layouts/Thankyou"
 import Page from "../Pages/Client/Profile/Page"
+import Dashboard from "../Pages/Admin/Dashboard/Dashboard"
 
 
 const Router = () => {
@@ -50,6 +51,7 @@ const Router = () => {
                         <Lay_Out_Admin />
                     </PrivateRoute>
                 }>
+                    <Route index element={<Dashboard />} />
                     {/* Phim */}
                     <Route path="movie" element={<Movie_List />} />
                     <Route path="movie/add" element={<Movie_Add />} />
